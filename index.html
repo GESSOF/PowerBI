@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programa Power BI - GESSOF</title>
+    <link rel="icon" type="image/png" href="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Imagenes/New_Power_BI_Logo.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(90deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(255, 193, 7, 0.3);
+            border-bottom: 3px solid #ffc107;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 193, 7, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #ffc107;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: #e0e0e0;
+            margin-bottom: 20px;
+        }
+
+        .gessof-badge {
+            display: inline-block;
+            background: rgba(255, 193, 7, 0.2);
+            padding: 8px 20px;
+            border-radius: 25px;
+            border: 2px solid #ffc107;
+            font-weight: 600;
+            color: #ffc107;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Sections */
+        .section {
+            margin: 60px 0;
+            padding: 40px;
+            background: linear-gradient(145deg, #1e1e3f, #16213e);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .section:hover {
+            border-color: rgba(255, 193, 7, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255, 193, 7, 0.2);
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            color: #ffc107;
+            margin-bottom: 30px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .section-title i {
+            font-size: 2rem;
+        }
+
+        /* Conceptos Grid */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .concept-card {
+            background: linear-gradient(145deg, #2a2a5c, #1a1a3e);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .concept-card:hover {
+            border-color: #ffc107;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 193, 7, 0.2);
+        }
+
+        .concept-card h3 {
+            color: #ffc107;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .concept-card p {
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        /* Program Structure */
+        .program-structure {
+            margin-top: 40px;
+        }
+
+        .phases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .phase {
+            background: linear-gradient(145deg, #2a2a5c, #1a1a3e);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid #ffc107;
+            transition: all 0.3s ease;
+        }
+
+        .phase:hover {
+            transform: translateX(10px);
+            box-shadow: 0 15px 30px rgba(255, 193, 7, 0.2);
+        }
+
+        .phase h3 {
+            color: #ffc107;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .modules-list {
+            margin-top: 20px;
+        }
+
+        .module {
+            background: rgba(255, 193, 7, 0.1);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 193, 7, 0.2);
+        }
+
+        .module-title {
+            color: #ffc107;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .module-details {
+            color: #cccccc;
+            font-size: 0.9rem;
+        }
+
+        .module-time {
+            color: #ffc107;
+            font-weight: 600;
+            float: right;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, #2a2a5c, #1a1a3e);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+            border-color: #ffc107;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: #ffc107;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .feature {
+            background: rgba(255, 193, 7, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover {
+            background: rgba(255, 193, 7, 0.2);
+            border-color: #ffc107;
+        }
+
+        .feature i {
+            font-size: 2rem;
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+
+        .feature h4 {
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: #e0e0e0;
+            font-size: 0.9rem;
+        }
+
+        /* Certification Section */
+        .cert-info {
+            background: linear-gradient(145deg, #1a1a3e, #2a2a5c);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 193, 7, 0.4);
+            margin-top: 30px;
+        }
+
+        .cert-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .cert-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 193, 7, 0.1);
+            border-radius: 10px;
+        }
+
+        .cert-item strong {
+            color: #ffc107;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            margin: 80px 0;
+            padding: 60px 40px;
+            background: linear-gradient(45deg, #1a1a3e, #2a2a5c, #1a1a3e);
+            border-radius: 20px;
+            border: 2px solid #ffc107;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 193, 7, 0.1), transparent);
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: #ffc107;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            color: #e0e0e0;
+            margin-bottom: 40px;
+        }
+
+        .portal-btn {
+            display: inline-block;
+            padding: 20px 40px;
+            background: linear-gradient(45deg, #ffc107, #ffb300);
+            color: #000;
+            text-decoration: none;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(255, 193, 7, 0.4);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portal-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .portal-btn:hover::before {
+            left: 100%;
+        }
+
+        .portal-btn:hover {
+            background: linear-gradient(45deg, #ffb300, #ffa000);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(255, 193, 7, 0.6);
+        }
+
+        .portal-btn i {
+            margin-left: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Time Investment Highlight */
+        .time-highlight {
+            background: linear-gradient(135deg, #2a2a5c, #1a1a3e);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #ffc107;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .time-highlight h3 {
+            color: #ffc107;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .time-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .time-stat {
+            padding: 15px;
+            background: rgba(255, 193, 7, 0.1);
+            border-radius: 10px;
+        }
+
+        .time-stat .number {
+            font-size: 2rem;
+            color: #ffc107;
+            font-weight: 700;
+        }
+
+        .time-stat .label {
+            color: #e0e0e0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section {
+                margin: 30px 0;
+                padding: 25px;
+            }
+            
+            .concepts-grid,
+            .phases {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .portal-btn {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Scroll Animations */
+        .section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>📊 Programa de Capacitación Power BI</h1>
+            <p>Transformando datos en valor para tu organización</p>
+            <div class="gessof-badge">GESSOF - Capacitación Profesional</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Resumen Ejecutivo -->
+        <section class="section">
+            <h2 class="section-title">
+                <i class="fas fa-bullseye"></i>
+                Resumen Ejecutivo
+            </h2>
+            
+            <div class="concepts-grid">
+                <div class="concept-card">
+                    <h3><i class="fas fa-chart-bar"></i> ¿Qué es Power BI?</h3>
+                    <p><strong>Microsoft Power BI</strong> es una plataforma de Business Intelligence que permite conectar y transformar datos de múltiples fuentes, crear visualizaciones interactivas y dashboards profesionales, compartir insights de forma segura y tomar decisiones basadas en datos en tiempo real.</p>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-cogs"></i> Power Query</h3>
+                    <p><strong>Motor ETL</strong> integrado que conecta, limpia y transforma datos de diversas fuentes. Utiliza el lenguaje M para transformaciones avanzadas, automatiza la preparación de datos y garantiza consistencia en el análisis.</p>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-calculator"></i> DAX (Data Analysis Expressions)</h3>
+                    <p><strong>Lenguaje de fórmulas</strong> para crear medidas y columnas calculadas. Permite realizar cálculos complejos, funciones de tiempo, agregaciones y filtros contextuales, potenciando el análisis con KPIs personalizados.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Programa Académico -->
+        <section class="section">
+            <h2 class="section-title">
+                <i class="fas fa-graduation-cap"></i>
+                Programa Académico por Módulos
+            </h2>
+
+            <div class="phases">
+                <div class="phase">
+                    <h3><i class="fas fa-rocket"></i> FASE 1: Fundamentos</h3>
+                    <p><strong>Semana 1</strong> - Construye las bases sólidas</p>
+                    
+                    <div class="modules-list">
+                        <div class="module">
+                            <div class="module-title">Instalación y Configuración</div>
+                            <div class="module-details">
+                                Descarga, instalación y configuración inicial del entorno
+                                <span class="module-time">30 min</span>
+                            </div>
+                        </div>
+                        
+                        <div class="module">
+                            <div class="module-title">Curso Inicial - Primeros Pasos</div>
+                            <div class="module-details">
+                                3 videos prácticos + material Excel + tarea completa
+                                <span class="module-time">3.4 horas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phase">
+                    <h3><i class="fas fa-chart-line"></i> FASE 2: Curso Básico</h3>
+                    <p><strong>Semanas 2-3</strong> - Domina las herramientas fundamentales</p>
+                    
+                    <div class="modules-list">
+                        <div class="module">
+                            <div class="module-title">Módulo 1: Dashboard - Reporte N° 01</div>
+                            <div class="module-details">
+                                8 lecciones - Importación, modelado y gráficos básicos
+                                <span class="module-time">1.5 horas</span>
+                            </div>
+                        </div>
+                        
+                        <div class="module">
+                            <div class="module-title">Módulo 2: Dashboard - Reporte N° 02</div>
+                            <div class="module-details">
+                                15 lecciones - Visualizaciones avanzadas y filtros
+                                <span class="module-time">3.2 horas</span>
+                            </div>
+                        </div>
+                        
+                        <div class="module">
+                            <div class="module-title">Módulo 3: Funciones DAX Básicas</div>
+                            <div class="module-details">
+                                8 lecciones - SUM, CALCULATE, IF, COUNT y más
+                                <span class="module-time">2.3 horas</span>
+                            </div>
+                        </div>
+                        
+                        <div class="module">
+                            <div class="module-title">Módulo 4: Dashboard - Reporte N° 04</div>
+                            <div class="module-details">
+                                8 lecciones - Dashboards avanzados y Power BI Service
+                                <span class="module-time">2.1 horas</span>
+                            </div>
+                        </div>
+                        
+                        <div class="module">
+                            <div class="module-title">Módulo 5: Dashboard - Reporte N° 05</div>
+                            <div class="module-details">
+                                14 lecciones - Proyecto final con navegación y bookmarks
+                                <span class="module-time">3.5 horas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phase">
+                    <h3><i class="fas fa-trophy"></i> FASE 3: Curso Intermedio</h3>
+                    <p><strong>Semana 4</strong> - Técnicas profesionales avanzadas</p>
+                    
+                    <div class="modules-list">
+                        <div class="module">
+                            <div class="module-title">Módulo 1: Domina Power Query</div>
+                            <div class="module-details">
+                                8 lecciones - ETL avanzado y transformaciones complejas
+                                <span class="module-time">1.9 horas</span>
+                            </div>
+                        </div>
+                        
+                        <div class="module">
+                            <div class="module-title">Módulo 2: Buenas Prácticas</div>
+                            <div class="module-details">
+                                3 lecciones - Metodologías profesionales y optimización
+                                <span class="module-time">47 min</span>
+                            </div>
+                        </div>
+                        
+                        <div class="module">
+                            <div class="module-title">Módulo 3: Funciones DAX II Avanzadas</div>
+                            <div class="module-details">
+                                9 lecciones - RELATED, RANKX, SWITCH y análisis temporal
+                                <span class="module-time">3.1 horas</span>
+                            </div>
+                        </div>
+                        
+                        <div class="module">
+                            <div class="module-title">Módulo 4: Tabla de Calendario</div>
+                            <div class="module-details">
+                                3 lecciones - Creación con DAX y lenguaje M
+                                <span class="module-time">1.2 horas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">~23</div>
+                    <div class="stat-label">Horas de Video</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">67+</div>
+                    <div class="stat-label">Lecciones Prácticas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Fases Progresivas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Semanas Máximo</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Funcionalidades del Portal -->
+        <section class="section">
+            <h2 class="section-title">
+                <i class="fas fa-cogs"></i>
+                Funcionalidades del Portal
+            </h2>
+
+            <div class="features-grid">
+                <div class="feature">
+                    <i class="fas fa-check-circle"></i>
+                    <h4>Sistema de Seguimiento</h4>
+                    <p>Marcado automático de videos vistos con estadísticas de progreso por módulo</p>
+                </div>
+                
+                <div class="feature">
+                    <i class="fas fa-chart-pie"></i>
+                    <h4>Estadísticas Personales</h4>
+                    <p>Porcentaje de completación general y tiempo total de capacitación</p>
+                </div>
+                
+                <div class="feature">
+                    <i class="fas fa-download"></i>
+                    <h4>Material Descargable</h4>
+                    <p>Archivos Excel y recursos prácticos organizados por módulo</p>
+                </div>
+                
+                <div class="feature">
+                    <i class="fas fa-play-circle"></i>
+                    <h4>Videos Integrados</h4>
+                    <p>Reproducción directa desde YouTube con seguimiento automático</p>
+                </div>
+                
+                <div class="feature">
+                    <i class="fas fa-tasks"></i>
+                    <h4>Tareas Prácticas</h4>
+                    <p>Ejercicios con datasets reales para aplicar conocimientos</p>
+                </div>
+                
+                <div class="feature">
+                    <i class="fas fa-file-pdf"></i>
+                    <h4>Reportes PDF</h4>
+                    <p>Generación automática de informes de progreso personalizados</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certificación Microsoft -->
+        <section class="section">
+            <h2 class="section-title">
+                <i class="fas fa-certificate"></i>
+                Certificación Microsoft Power BI
+            </h2>
+
+            <div class="cert-info">
+                <h3 style="color: #ffc107; text-align: center; margin-bottom: 20px;">
+                    Microsoft Certified: Power BI Data Analyst Associate (PL-300)
+                </h3>
+                
+                <div class="cert-details">
+                    <div class="cert-item">
+                        <strong>Código del Examen</strong>
+                        PL-300
+                    </div>
+                    <div class="cert-item">
+                        <strong>Duración</strong>
+                        120 minutos
+                    </div>
+                    <div class="cert-item">
+                        <strong>Formato</strong>
+                        Opción múltiple y casos prácticos
+                    </div>
+                    <div class="cert-item">
+                        <strong>Puntuación Mínima</strong>
+                        700 de 1000 puntos
+                    </div>
+                    <div class="cert-item">
+                        <strong>Validez</strong>
+                        12 meses
+                    </div>
+                    <div class="cert-item">
+                        <strong>Precio</strong>
+                        USD $165 (~$150,000 CLP)
+                    </div>
+                    <div class="cert-item">
+                        <strong>Modalidad</strong>
+                        Presencial o remoto supervisado
+                    </div>
+                    <div class="cert-item">
+                        <strong>Recursos</strong>
+                        Microsoft Learn gratuito
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 25px;">
+                    <a href="https://docs.microsoft.com/learn/certifications/power-bi-data-analyst-associate" 
+                       target="_blank" 
+                       style="color: #ffc107; text-decoration: none; font-weight: 600; font-size: 1.1rem;">
+                        🔗 docs.microsoft.com/learn/certifications/power-bi-data-analyst-associate
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tiempo Total de Inversión -->
+        <section class="section">
+            <div class="time-highlight">
+                <h3><i class="fas fa-clock"></i> Tiempo Total de Inversión</h3>
+                
+                <div class="time-stats">
+                    <div class="time-stat">
+                        <div class="number">~23</div>
+                        <div class="label">Horas de Video</div>
+                    </div>
+                    <div class="time-stat">
+                        <div class="number">~17</div>
+                        <div class="label">Horas de Práctica</div>
+                    </div>
+                    <div class="time-stat">
+                        <div class="number">40</div>
+                        <div class="label">Horas Totales Máximo</div>
+                    </div>
+                    <div class="time-stat">
+                        <div class="number">2</div>
+                        <div class="label">Horas Diarias (4 semanas)</div>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 20px; color: #e0e0e0; font-size: 1.1rem;">
+                    <strong>Dedicación recomendada:</strong> 2 horas diarias durante 4 semanas para completar todo el programa
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 class="cta-title">¡Comienza Tu Transformación Profesional!</h2>
+            <p class="cta-subtitle">
+                Accede al portal completo y domina Power BI desde cero hasta experto
+            </p>
+            <button class="portal-btn" onclick="redirectToPortal()">
+                Acceder al Portal de Capacitación
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <script>
+        // Scroll animations
+        function animateOnScroll() {
+            const sections = document.querySelectorAll('.section');
+            
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                
+                if (isVisible) {
+                    section.classList.add('visible');
+                }
+            });
+        }
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial check
+            animateOnScroll();
+            
+            // Add scroll listener
+            window.addEventListener('scroll', animateOnScroll);
+        });
+
+        // Redirect to portal function
+        function redirectToPortal() {
+            // Add a smooth transition effect
+            document.body.style.transition = 'opacity 0.5s ease';
+            document.body.style.opacity = '0.7';
+            
+            setTimeout(() => {
+                // Replace with your actual portal URL
+                window.open('Portal_PowerBI.html', '_blank', 'noopener,noreferrer');
+                
+                // Reset opacity
+                document.body.style.opacity = '1';
+            }, 300);
+        }
+
+        // Add some interactive effects
+        document.querySelectorAll('.concept-card, .phase, .feature, .stat-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Smooth scrolling for better UX
+        document.documentElement.style.scrollBehavior = 'smooth';
+    </script>
+</body>
+</html>
