@@ -1,0 +1,4071 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitación Completa en Power BI</title>
+	<link rel="icon" type="image/png" href="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Imagenes/New_Power_BI_Logo.png">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* ====================================== */
+        /*           ESTILOS GENERALES            */
+        /* ====================================== */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ====================================== */
+        /*              HEADER FIJO               */
+        /* ====================================== */
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+            padding: 8px 20px;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(255, 193, 7, 0.3);
+            border-bottom: 2px solid #ffc107;
+        }
+
+        .header h1 {
+            text-align: center;
+            font-size: clamp(1rem, 2.5vw, 1.8rem);
+            font-weight: 700;
+            color: #ffc107;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .nav-btn {
+            padding: 8px 16px;
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            color: #ffc107;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255, 193, 7, 0.2);
+            border-color: #ffc107;
+        }
+
+        .sub-nav {
+            display: none;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .sub-nav.show {
+            display: flex;
+        }
+
+        .sub-nav-btn {
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .sub-nav-btn:hover, .sub-nav-btn.active {
+            background: rgba(255, 193, 7, 0.15);
+            color: #ffc107;
+            border-color: rgba(255, 193, 7, 0.5);
+        }
+
+        /* ====================================== */
+        /*           SISTEMA DE PÁGINAS           */
+        /* ====================================== */
+        
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 120px;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeInPage 0.8s ease-out;
+        }
+
+        @keyframes fadeInPage {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ====================================== */
+        /*           PÁGINA DE INICIO             */
+        /* ====================================== */
+        
+        .home-page {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7));
+            padding: 20px;
+        }
+
+        .home-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Imagenes/Img000_PaginaInicio.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -1;
+        }
+
+        .home-content {
+            text-align: center;
+            max-width: 900px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 60px 40px;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 193, 7, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .home-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            color: #ffc107;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+            font-weight: 700;
+        }
+
+        .home-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+            color: #e0e0e0;
+            margin-bottom: 40px;
+            line-height: 1.4;
+        }
+
+        .home-buttons {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .home-btn {
+            padding: 20px 35px;
+            border: none;
+            border-radius: 15px;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 220px;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary-home {
+            background: linear-gradient(45deg, #ffc107, #ffb300);
+            color: #000;
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4);
+        }
+
+        .btn-primary-home:hover {
+            background: linear-gradient(45deg, #ffb300, #ffa000);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 193, 7, 0.6);
+        }
+
+        .btn-secondary-home {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 2px solid rgba(255, 193, 7, 0.7);
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.2);
+        }
+
+        .btn-secondary-home:hover {
+            background: rgba(255, 193, 7, 0.2);
+            border-color: #ffc107;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 193, 7, 0.4);
+        }
+
+        .btn-tertiary-home {
+            background: rgba(106, 90, 205, 0.2);
+            color: #fff;
+            border: 2px solid rgba(106, 90, 205, 0.7);
+            box-shadow: 0 8px 25px rgba(106, 90, 205, 0.2);
+        }
+
+        .btn-tertiary-home:hover {
+            background: rgba(106, 90, 205, 0.3);
+            border-color: #6a5acd;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(106, 90, 205, 0.4);
+        }
+
+        /* ====================================== */
+        /*       PÁGINA DE INSTALACIÓN            */
+        /* ====================================== */
+        
+        .install-page, .course-page, .functions-page, .statistics-page {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 20px;
+            background: rgba(255, 193, 7, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .page-header h2 {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+
+        .install-option {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .install-option:hover {
+            border-color: #ffc107;
+            box-shadow: 0 10px 30px rgba(255, 193, 7, 0.3);
+        }
+
+        .option-title {
+            font-size: clamp(1.3rem, 3vw, 2rem);
+            color: #ffc107;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option-description {
+            font-size: clamp(0.95rem, 2vw, 1.2rem);
+            color: #e0e0e0;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            background: rgba(255, 193, 7, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .install-image {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .install-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffc107;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            background: rgba(255, 193, 7, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin: 15px 0;
+        }
+
+        .external-link:hover {
+            background: rgba(255, 193, 7, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* ====================================== */
+        /*         PÁGINA ESTADÍSTICAS            */
+        /* ====================================== */
+        
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .stats-card {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .stats-card:hover {
+            border-color: #ffc107;
+            box-shadow: 0 10px 30px rgba(255, 193, 7, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .stats-card-icon {
+            font-size: 3rem;
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+
+        .stats-card-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+
+        .stats-card-label {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .stats-card-time {
+            color: #ffc107;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 10px;
+            padding: 8px 12px;
+            background: rgba(255, 193, 7, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .stats-progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #333;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .stats-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffc107, #ffb300);
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+
+        .module-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .module-stats-card {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid #333;
+        }
+
+        .module-stats-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .module-stats-title {
+            color: #ffc107;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .module-stats-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .module-stat-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 193, 7, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 193, 7, 0.1);
+        }
+
+        .module-stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffc107;
+            margin-bottom: 5px;
+        }
+
+        .module-stat-label {
+            color: #e0e0e0;
+            font-size: 0.9rem;
+        }
+
+        .module-progress {
+            margin-top: 15px;
+        }
+
+        .module-progress-text {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .module-progress-percentage {
+            color: #ffc107;
+            font-weight: 600;
+        }
+
+        .module-time-info {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .module-time-total {
+            color: #ffc107;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .module-time-detail {
+            color: #e0e0e0;
+            font-size: 0.85rem;
+        }
+
+        /* ====================================== */
+        /*         GENERADOR DE REPORTES          */
+        /* ====================================== */
+
+        .report-generator {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 50px;
+            border: 1px solid #333;
+            text-align: center;
+        }
+
+        .report-generator h3 {
+            color: #ffc107;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .report-input-section {
+            margin-bottom: 30px;
+        }
+
+        .report-input-label {
+            display: block;
+            color: #ffc107;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .report-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 16px;
+            font-size: 1rem;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background: #333;
+            color: #fff;
+            transition: border-color 0.3s ease;
+        }
+
+        .report-input:focus {
+            outline: none;
+            border-color: #ffc107;
+            box-shadow: 0 0 10px rgba(255, 193, 7, 0.3);
+        }
+
+        .generate-report-btn {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .generate-report-btn:hover {
+            background: linear-gradient(45deg, #c82333, #bd2130);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.5);
+        }
+
+        .generate-report-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* ====================================== */
+        /*           SECCIONES DE CURSO           */
+        /* ====================================== */
+        
+        .course-section {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 50px;
+            border: 1px solid #333;
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            color: #ffc107;
+            margin-bottom: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .intro-video {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 193, 7, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 193, 7, 0.2);
+        }
+
+        .video-intro-title {
+            font-size: 1.8rem;
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+
+        .video-intro-desc {
+            color: #e0e0e0;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .intro-video-frame {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .intro-video-frame:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 193, 7, 0.3);
+        }
+
+        .intro-video-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .intro-play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 193, 7, 0.9);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            font-size: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .intro-play-button:hover {
+            background: #ffc107;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        /* ====================================== */
+        /*            MÓDULOS DE CURSO            */
+        /* ====================================== */
+        
+        .course-module {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid #333;
+        }
+
+        .module-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .module-title {
+            font-size: clamp(1.3rem, 3vw, 2rem);
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+
+        .module-description {
+            color: #e0e0e0;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 193, 7, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid #ffc107;
+        }
+
+        .download-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .download-btn {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 5px;
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(45deg, #20c997, #17a2b8);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .download-btn-small {
+            padding: 8px 16px;
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .download-btn-small:hover {
+            background: linear-gradient(45deg, #20c997, #17a2b8);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        /* ====================================== */
+        /*         LISTAS DE VIDEOS CURSO INICIAL */
+        /* ====================================== */
+        
+        .videos-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .video-item {
+            background: linear-gradient(145deg, #333, #2a2a2a);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #444;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .video-item:hover {
+            border-color: #ffc107;
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.2);
+        }
+
+        .video-thumbnail-small {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .video-thumbnail-small img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .small-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 193, 7, 0.9);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .small-play-btn:hover {
+            background: #ffc107;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .video-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .video-checkbox {
+            margin-top: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .video-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #ffc107;
+        }
+
+        .video-checkbox .watched-label {
+            font-size: 0.7rem;
+            color: #ffc107;
+            font-weight: 600;
+        }
+
+        .video-details h4 {
+            color: #ffc107;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .video-number {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .video-duration {
+            color: #888;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        .video-download-section {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* ====================================== */
+        /*         CARRUSEL FLUIDO TIPO SAP HANA  */
+        /* ====================================== */
+        
+        .video-carousel-container {
+            position: relative;
+            margin: 30px 0;
+            padding: 0 20px;
+        }
+
+        .carousel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 20px;
+        }
+
+        .carousel-title {
+            color: #ffc107;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .carousel-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .carousel-nav-btn {
+            background: linear-gradient(45deg, rgba(255, 193, 7, 0.9), rgba(255, 179, 0, 0.9));
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+            z-index: 10;
+        }
+
+        .carousel-nav-btn:hover {
+            background: linear-gradient(45deg, #ffc107, #ffb300);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 193, 7, 0.5);
+        }
+
+        .carousel-nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: rgba(128, 128, 128, 0.5);
+        }
+
+        .carousel-nav-btn:disabled:hover {
+            transform: none;
+            box-shadow: 0 4px 15px rgba(128, 128, 128, 0.2);
+        }
+
+        .video-carousel {
+            overflow: hidden;
+            position: relative;
+            background: rgba(255, 193, 7, 0.02);
+            border-radius: 15px;
+            padding: 20px;
+            touch-action: pan-x;
+        }
+
+        .video-carousel-track {
+            display: flex;
+            gap: 20px;
+            cursor: grab;
+            will-change: transform;
+            user-select: none;
+        }
+
+        .video-carousel-track:active {
+            cursor: grabbing;
+        }
+
+        .carousel-video-item {
+            flex: 0 0 300px;
+            min-width: 300px;
+            max-width: 300px;
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 15px;
+            padding: 15px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            user-select: none;
+        }
+
+        .carousel-video-item:hover {
+            border-color: #ffc107;
+            box-shadow: 0 8px 30px rgba(255, 193, 7, 0.2);
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        .carousel-video-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 170px;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .carousel-video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .carousel-video-thumbnail.selected {
+            transform: scale(1.08);
+            box-shadow: 0 20px 50px rgba(255, 193, 7, 0.6);
+            border: 3px solid #ffc107;
+            z-index: 10;
+        }
+
+        .carousel-video-thumbnail.selected img {
+            transform: scale(1.05);
+        }
+
+        .carousel-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(255, 193, 7, 0.95);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            z-index: 15;
+        }
+
+        .carousel-video-thumbnail.selected .carousel-play-btn {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .carousel-play-btn:hover {
+            background: #ffc107;
+            transform: translate(-50%, -50%) scale(1.1) !important;
+            box-shadow: 0 15px 40px rgba(255, 193, 7, 0.6);
+        }
+
+        .carousel-video-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .carousel-video-checkbox {
+            margin-top: 3px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .carousel-video-checkbox input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #ffc107;
+        }
+
+        .carousel-video-checkbox .watched-label {
+            font-size: 0.65rem;
+            color: #ffc107;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .carousel-video-details h4 {
+            color: #ffc107;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: auto;
+            min-height: 3.9em;
+        }
+
+        /* ====================================== */
+        /*           BOTONES DE ACCIÓN            */
+        /* ====================================== */
+        
+        .action-buttons {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .action-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px;
+        }
+
+        .btn-next {
+            background: linear-gradient(45deg, #ffc107, #ffb300);
+            color: #000;
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+        }
+
+        .btn-next:hover {
+            background: linear-gradient(45deg, #ffb300, #ffa000);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.5);
+        }
+
+        .btn-task {
+            background: linear-gradient(45deg, #17a2b8, #20c997);
+            color: white;
+            box-shadow: 0 5px 15px rgba(23, 162, 184, 0.3);
+        }
+
+        .btn-task:hover {
+            background: linear-gradient(45deg, #20c997, #28a745);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(23, 162, 184, 0.5);
+        }
+
+        /* ====================================== */
+        /*           MENSAJE ESPECIAL             */
+        /* ====================================== */
+        
+        .coming-soon {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 20px;
+            border: 2px solid rgba(106, 90, 205, 0.5);
+        }
+
+        .coming-soon h2 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            color: #6a5acd;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .coming-soon p {
+            font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+            color: #e0e0e0;
+        }
+
+        .congratulations {
+            text-align: center;
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            border-radius: 20px;
+            padding: 50px 30px;
+            margin: 50px 0;
+            border: 2px solid rgba(255, 193, 7, 0.5);
+        }
+
+        .congratulations h3 {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            color: #ffc107;
+            margin-bottom: 20px;
+        }
+
+        .congratulations p {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: #e0e0e0;
+            margin-bottom: 30px;
+        }
+
+        /* ====================================== */
+        /*         MODAL DE VIDEO INTEGRADO       */
+        /* ====================================== */
+        
+        .video-modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .video-modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 1200px;
+            height: 80%;
+            max-height: 700px;
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 193, 7, 0.5);
+            overflow: hidden;
+            animation: videoModalSlideIn 0.4s ease-out;
+        }
+
+        @keyframes videoModalSlideIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .video-modal-header {
+            background: linear-gradient(90deg, #1a1a1a, #2a2a2a);
+            padding: 20px 25px;
+            border-bottom: 1px solid rgba(255, 193, 7, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .video-modal-title {
+            color: #ffc107;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0;
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .video-modal-close {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            color: #ffc107;
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .video-modal-close:hover {
+            background: rgba(255, 193, 7, 0.2);
+            border-color: #ffc107;
+            transform: scale(1.1);
+        }
+
+        .video-modal-player {
+            width: 100%;
+            height: calc(100% - 80px);
+            position: relative;
+        }
+
+        .video-modal-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #000;
+        }
+
+        /* ====================================== */
+        /*         MODAL PARA AGREGAR VIDEOS      */
+        /* ====================================== */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            border: 2px solid rgba(255, 193, 7, 0.5);
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-header h2 {
+            color: #ffc107;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            color: #ffc107;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #ffb300;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #ffc107;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background: #333;
+            color: #fff;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ffc107;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn-modal {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-modal.primary {
+            background: linear-gradient(45deg, #ffc107, #ffb300);
+            color: #000;
+        }
+
+        .btn-modal.primary:hover {
+            background: linear-gradient(45deg, #ffb300, #ffa000);
+            transform: translateY(-2px);
+        }
+
+        .btn-modal.secondary {
+            background: #444;
+            color: #fff;
+        }
+
+        .btn-modal.secondary:hover {
+            background: #555;
+        }
+
+        /* ====================================== */
+        /*        GRID DE FUNCIONES ESPECÍFICAS   */
+        /* ====================================== */
+        
+        .functions-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .function-video-item {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .function-video-item:hover {
+            border-color: #ffc107;
+            box-shadow: 0 10px 30px rgba(255, 193, 7, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .function-delete-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(220, 53, 69, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .function-video-item:hover .function-delete-btn {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .function-delete-btn:hover {
+            background: rgba(220, 53, 69, 1);
+            transform: scale(1.1);
+        }
+
+        .function-video-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .function-video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .function-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 193, 7, 0.9);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .function-play-btn:hover {
+            background: #ffc107;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .function-video-info h3 {
+            color: #ffc107;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .function-video-info p {
+            color: #e0e0e0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .add-video-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(45deg, #ffc107, #ffb300);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 193, 7, 0.4);
+            z-index: 100;
+        }
+		
+	.generate-html-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 100px;
+    background: linear-gradient(45deg, #6f42c1, #563d7c);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(111, 66, 193, 0.4);
+    z-index: 100;
+}
+
+.generate-html-btn:hover {
+    background: linear-gradient(45deg, #563d7c, #452a5c);
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(111, 66, 193, 0.6);
+}
+
+@media (max-width: 768px) {
+    .generate-html-btn {
+        bottom: 20px;
+        right: 80px;
+        width: 50px;
+        height: 50px;
+        font-size: 16px;
+    }
+}
+
+
+        .add-video-btn:hover {
+            background: linear-gradient(45deg, #ffb300, #ffa000);
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(255, 193, 7, 0.6);
+        }
+
+        /* ====================================== */
+        /*       RESPONSIVE DESIGN                */
+        /* ====================================== */
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 6px 15px;
+            }
+            
+            .page {
+                padding-top: 140px;
+            }
+            
+            .main-nav {
+                gap: 10px;
+            }
+            
+            .nav-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .sub-nav {
+                gap: 8px;
+            }
+            
+            .sub-nav-btn {
+                padding: 4px 8px;
+                font-size: 0.7rem;
+            }
+            
+            .home-content {
+                padding: 40px 25px;
+                margin: 0 10px;
+            }
+            
+            .home-buttons {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .home-btn {
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .videos-list {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .video-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .carousel-video-item {
+                flex: 0 0 240px;
+                min-width: 240px;
+                max-width: 240px;
+            }
+
+            .video-carousel-container {
+                padding: 0 10px;
+            }
+
+            .carousel-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .carousel-controls {
+                align-self: flex-end;
+            }
+
+            .carousel-nav-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
+            }
+
+            .carousel-video-thumbnail.selected .carousel-play-btn {
+                transform: translate(-50%, -50%) scale(0.9);
+                opacity: 0.9;
+            }
+
+            .functions-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .add-video-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+
+            .video-modal-content {
+                width: 95%;
+                height: 90%;
+                max-height: none;
+            }
+
+            .video-modal-header {
+                padding: 15px 20px;
+            }
+
+            .video-modal-title {
+                font-size: 1rem;
+            }
+
+            .video-modal-close {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+
+            .report-input {
+                max-width: 100%;
+            }
+
+            .generate-report-btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ====================================== -->
+    <!--              HEADER FIJO               -->
+    <!-- ====================================== -->
+    
+    <header class="header">
+        <h1>🎓 Capacitación Completa en Power BI</h1>
+        
+        <!-- Navegación Principal -->
+        <nav class="main-nav">
+            <button class="nav-btn" onclick="showMainPage('homePage')">
+                <i class="fas fa-home"></i> Inicio
+            </button>
+            <button class="nav-btn" onclick="showMainPage('installPage')">
+                <i class="fas fa-download"></i> Instalación
+            </button>
+            <button class="nav-btn" onclick="showMainPage('coursePage')" id="courseNavBtn">
+                <i class="fas fa-graduation-cap"></i> Iniciar Curso
+            </button>
+            <button class="nav-btn" onclick="showMainPage('statisticsPage')">
+                <i class="fas fa-chart-bar"></i> Estadísticas
+            </button>
+            <button class="nav-btn" onclick="showMainPage('functionsPage')">
+                <i class="fas fa-cogs"></i> Funciones Específicas
+            </button>
+        </nav>
+        
+        <!-- Sub-navegación para Cursos -->
+        <nav class="sub-nav" id="courseSubNav">
+            <button class="sub-nav-btn" onclick="showCoursePage('inicial')" id="inicialBtn">
+                Curso Inicial
+            </button>
+            <button class="sub-nav-btn" onclick="showCoursePage('basico')" id="basicoBtn">
+                Básico
+            </button>
+            <button class="sub-nav-btn" onclick="showCoursePage('intermedio')" id="intermedioBtn">
+                Intermedio
+            </button>
+        </nav>
+    </header>
+
+    <!-- ====================================== -->
+    <!--           PÁGINA DE INICIO             -->
+    <!-- ====================================== -->
+    
+    <div class="page active" id="homePage">
+        <div class="home-page">
+            <div class="home-background"></div>
+            <div class="home-content">
+                <h1 class="home-title">¡Bienvenido!</h1>
+                <p class="home-subtitle">
+                    Domina Power BI desde cero hasta convertirte en un experto en visualización de datos
+                </p>
+                <div class="home-buttons">
+                    <button class="home-btn btn-secondary-home" onclick="showMainPage('installPage')">
+                        <i class="fas fa-download"></i>
+                        Instalación de Power BI
+                    </button>
+                    <button class="home-btn btn-primary-home" onclick="showMainPage('coursePage')">
+                        <i class="fas fa-play-circle"></i>
+                        Iniciar Curso
+                    </button>
+                    <button class="home-btn btn-tertiary-home" onclick="showMainPage('functionsPage')">
+                        <i class="fas fa-cogs"></i>
+                        Funciones Específicas
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================== -->
+    <!--         PÁGINA DE INSTALACIÓN          -->
+    <!-- ====================================== -->
+    
+    <div class="page" id="installPage">
+        <div class="install-page">
+            <div class="page-header">
+                <h2>🔥 Descarga e Instalación de Power BI</h2>
+                <p>Sigue estas opciones para instalar Power BI Desktop en tu computadora</p>
+            </div>
+
+            <!-- OPCIÓN 1: Microsoft Store -->
+            <div class="install-option">
+                <h3 class="option-title">
+                    <i class="fab fa-microsoft"></i>
+                    Opción 1: Microsoft Store (Recomendada)
+                </h3>
+                <div class="option-description">
+                    Dentro de la tienda de Microsoft, buscar <strong>Power BI Desktop</strong> y hacer clic en 
+                    <strong>'Descargar gratis'</strong>. Esta opción es aconsejable dado que garantizará 
+                    <strong>actualizaciones automáticas</strong>.
+                </div>
+                <div class="install-image">
+                    <img src="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Imagenes/Img001_InstalacionPowerbi.png" 
+                         alt="Instalación desde Microsoft Store"
+                         onerror="this.style.display='none'">
+                </div>
+            </div>
+
+            <!-- OPCIÓN 2: Página Oficial -->
+            <div class="install-option">
+                <h3 class="option-title">
+                    <i class="fas fa-globe"></i>
+                    Opción 2: Página Oficial de Microsoft
+                </h3>
+                <div class="option-description">
+                    Si prefieres descargar directamente desde la página oficial, puedes usar el siguiente enlace:
+                </div>
+                <a href="https://www.microsoft.com/es-es/power-platform/products/power-bi/desktop" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="external-link">
+                    <i class="fas fa-external-link-alt"></i>
+                    Ir a la página oficial de Power BI Desktop
+                </a>
+                <div class="install-image">
+                    <img src="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Imagenes/Img002_InstalacionPowerbi.png" 
+                         alt="Página oficial de Power BI"
+                         onerror="this.style.display='none'">
+                </div>
+                <div class="option-description">
+                    Si quieres descargar el archivo, haz clic en <strong>'Consulte las opciones de descarga e
+                    idiomas disponibles'</strong>, elige <strong>español</strong> y descarga. Después de eso, simplemente
+                    sigue los pasos para abrir el programa.
+                </div>
+                <div class="install-image">
+                    <img src="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Imagenes/Img003_InstalacionPowerbi.png" 
+                         alt="Opciones de descarga e idiomas"
+                         onerror="this.style.display='none'">
+                </div>
+            </div>
+
+            <!-- MENSAJE DE FELICITACIONES -->
+            <div class="congratulations">
+                <h3>🎉 ¡Felicitaciones!</h3>
+                <p>Ya tienes descargado Power BI, una vez completes la instalación. Estarás listo para comenzar tu aprendizaje.</p>
+                <button class="action-btn btn-next" onclick="showMainPage('coursePage')">
+                    <i class="fas fa-graduation-cap"></i>
+                    Entrar al Curso
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================== -->
+    <!--          PÁGINA ESTADÍSTICAS           -->
+    <!-- ====================================== -->
+    
+    <div class="page" id="statisticsPage">
+        <div class="statistics-page">
+            <div class="page-header">
+                <h2>📊 Estadísticas de Progreso</h2>
+                <p>Monitorea tu avance en el curso de Power BI</p>
+            </div>
+            
+            <!-- Resumen General -->
+            <div class="stats-overview">
+                <div class="stats-card">
+                    <div class="stats-card-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="stats-card-number" id="totalVideosCount">0</div>
+                    <div class="stats-card-label">Videos Totales</div>
+                    <div class="stats-card-time" id="totalTimeDisplay">0h 0m 0s</div>
+                </div>
+                
+                <div class="stats-card">
+                    <div class="stats-card-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stats-card-number" id="watchedVideosCount">0</div>
+                    <div class="stats-card-label">Videos Vistos</div>
+                </div>
+                
+                <div class="stats-card">
+                    <div class="stats-card-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stats-card-number" id="pendingVideosCount">0</div>
+                    <div class="stats-card-label">Videos Pendientes</div>
+                </div>
+                
+                <div class="stats-card">
+                    <div class="stats-card-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div class="stats-card-number" id="overallPercentage">0%</div>
+                    <div class="stats-card-label">Progreso General</div>
+                    <div class="stats-progress-bar">
+                        <div class="stats-progress-fill" id="overallProgressBar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Estadísticas por Módulo -->
+            <div class="module-stats-grid" id="moduleStatsGrid">
+                <!-- Los módulos se cargarán dinámicamente aquí -->
+            </div>
+
+            <!-- Generador de Reportes -->
+            <div class="report-generator">
+                <h3>
+                    <i class="fas fa-file-pdf"></i>
+                    Generar Informe de Progreso
+                </h3>
+                <div class="report-input-section">
+                    <label for="studentName" class="report-input-label">Nombre del Estudiante:</label>
+                    <input type="text" id="studentName" class="report-input" placeholder="Ingresa tu nombre completo">
+                </div>
+                <button class="generate-report-btn" onclick="generateProgressReport()">
+                    <i class="fas fa-download"></i>
+                    Generar Informe PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================== -->
+    <!--           PÁGINA DE CURSO              -->
+    <!-- ====================================== -->
+    
+    <div class="page" id="coursePage">
+        <div class="course-page">
+            <!-- CURSO INICIAL -->
+            <div class="course-section" id="cursoInicial">
+                <div class="page-header">
+                    <h2>🚀 Curso Inicial de Power BI</h2>
+                    <p>Comienza tu aprendizaje con una introducción a Power BI y tus primeros proyectos completos</p>
+                </div>
+
+                <!-- Video Introductorio -->
+                <div class="intro-video">
+                    <h3 class="video-intro-title">Introducción a Power BI</h3>
+                    <p class="video-intro-desc">
+                        Conoce la interfaz de Power BI en este vistazo rápido a la herramienta
+                    </p>
+                    <div class="intro-video-frame" onclick="openVideoModal('https://youtu.be/ksAixZ7iY28', 'Introducción a Power BI')">
+                        <img src="https://img.youtube.com/vi/ksAixZ7iY28/maxresdefault.jpg" 
+                             alt="Introducción a Power BI"
+                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQ1MCIgdmlld0JveD0iMCAwIDgwMCA0NTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNDUwIiBmaWxsPSIjMzMzIi8+Cjx0ZXh0IHg9IjQwMCIgeT0iMjI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSIgZmlsbD0iI2ZmYzEwNyIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiPfCfjoUgSW50cm9kdWNjacOzbiBhIFBvd2VyIEJJPC90ZXh0Pgo8L3N2Zz4='" />
+                        <button class="intro-play-button">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Primer Curso -->
+                <div class="course-module">
+                    <div class="module-header">
+                        <h3 class="module-title">Creación de Dashboards Interactivos desde Cero</h3>
+                        <p>Aprende a crear dashboards completamente funcionales en 3 clases paso a paso</p>
+                    </div>
+
+                    <div class="videos-list">
+                        <div class="video-item">
+                            <div class="video-thumbnail-small" onclick="openVideoModal('https://youtu.be/GQz7JS8QHzk', 'Clase 1: Configuración inicial y primeros pasos', 'video1')">
+                                <img src="https://img.youtube.com/vi/GQz7JS8QHzk/maxresdefault.jpg" alt="Video 1">
+                                <button class="small-play-btn">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="video-info">
+                                <div class="video-checkbox">
+                                    <input type="checkbox" id="video1" onchange="saveWatchedStatus('video1', this.checked)">
+                                    <span class="watched-label">Visto</span>
+                                </div>
+                                <div class="video-details">
+                                    <h4>Clase 1: Configuración inicial y primeros pasos</h4>
+                                    <p class="video-duration">Duración: ~74 minutos</p>
+                                </div>
+                            </div>
+                            <div class="video-download-section">
+                                <a href="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Material/Material_Clase_1.zip" 
+                                   target="_blank" 
+                                   class="download-btn-small">
+                                    <i class="fas fa-download"></i>
+                                    Material Clase 1
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="video-item">
+                            <div class="video-thumbnail-small" onclick="openVideoModal('https://youtu.be/m_JqvO-l5AI', 'Clase 2: Creación de visualizaciones', 'video2')">
+                                <img src="https://img.youtube.com/vi/m_JqvO-l5AI/maxresdefault.jpg" alt="Video 2">
+                                <button class="small-play-btn">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="video-info">
+                                <div class="video-checkbox">
+                                    <input type="checkbox" id="video2" onchange="saveWatchedStatus('video2', this.checked)">
+                                    <span class="watched-label">Visto</span>
+                                </div>
+                                <div class="video-details">
+                                    <h4>Clase 2: Creación de visualizaciones</h4>
+                                    <p class="video-duration">Duración: ~72 minutos</p>
+                                </div>
+                            </div>
+                            <div class="video-download-section">
+                                <a href="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Material/Material_Clase_2.zip" 
+                                   target="_blank" 
+                                   class="download-btn-small">
+                                    <i class="fas fa-download"></i>
+                                    Material Clase 2
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="video-item">
+                            <div class="video-thumbnail-small" onclick="openVideoModal('https://youtu.be/r5mZNaTjSf8', 'Clase 3: Dashboard final y publicación', 'video3')">
+                                <img src="https://img.youtube.com/vi/r5mZNaTjSf8/maxresdefault.jpg" alt="Video 3">
+                                <button class="small-play-btn">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            </div>
+                            <div class="video-info">
+                                <div class="video-checkbox">
+                                    <input type="checkbox" id="video3" onchange="saveWatchedStatus('video3', this.checked)">
+                                    <span class="watched-label">Visto</span>
+                                </div>
+                                <div class="video-details">
+                                    <h4>Clase 3: Dashboard final y publicación</h4>
+                                    <p class="video-duration">Duración: ~59 minutos</p>
+                                </div>
+                            </div>
+                            <div class="video-download-section">
+                                <a href="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Material/Material_Clase_3.zip" 
+                                   target="_blank" 
+                                   class="download-btn-small">
+                                    <i class="fas fa-download"></i>
+                                    Material Clase 3
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="module-header">
+                        <h3 class="module-title">Ya estas listo para crear un Dashboard!</h3>
+                        <p>Pongamos nuestros conocimientos a prueba con la siguiente tarea.</p>
+                    </div>
+
+                    <div class="action-buttons">
+                        <a href="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Material/Tarea_Curso1.zip" 
+                           target="_blank" 
+                           class="action-btn btn-task">
+                            <i class="fas fa-tasks"></i>
+                            Descargar Tarea del Curso
+                        </a>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <div class="module-header">
+                        <p>Con este pequeño curso, ya tienes las bases. Ahora pulamos nuestros conocimientos con un curso completo.</p>
+                    </div>
+                    <button class="action-btn btn-next" onclick="showCoursePage('basico')">
+                        <i class="fas fa-arrow-right"></i>
+                        Continuar al Curso Básico
+                    </button>
+                </div>
+            </div>
+
+            <!-- CURSO BÁSICO -->
+            <div class="course-section" id="cursoBasico" style="display: none;">
+                <div class="page-header">
+                    <h2>📚 Power BI Básico</h2>
+                    <p>Desarrolla tus habilidades fundamentales en Power BI con proyectos prácticos y técnicas esenciales</p>
+                </div>
+
+                <!-- Módulo 1: Dashboard Reporte N°01 -->
+                <div class="course-module">
+                    <div class="module-header">
+                        <h3 class="module-title">Dashboard – Reporte N° 01</h3>
+                        <div class="module-description">
+                            Aprende los fundamentos de Power BI creando tu primer dashboard empresarial. Dominarás la importación de datos, creación de visualizaciones básicas y el diseño de reportes efectivos.
+                        </div>
+                    </div>
+
+                    <div class="download-section">
+                        <a href="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Material/Data_0002_Ventas_Tio_Tech.xlsx" 
+                           target="_blank" 
+                           class="download-btn">
+                            <i class="fas fa-download"></i>
+                            Descarga Material
+                        </a>
+                    </div>
+
+                    <div class="video-carousel-container">
+                        <div class="carousel-header">
+                            <div class="carousel-title">Videos del Módulo</div>
+                            <div class="carousel-controls">
+                                <button class="carousel-nav-btn prev" onclick="navigateCarousel('modulo1', -1)" id="modulo1PrevBtn">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="carousel-nav-btn next" onclick="navigateCarousel('modulo1', 1)" id="modulo1NextBtn">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="video-carousel" id="modulo1Carousel">
+                            <div class="video-carousel-track" id="modulo1Track"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Módulo 2: Dashboard Reporte N°02 -->
+                <div class="course-module">
+                    <div class="module-header">
+                        <h3 class="module-title">Dashboard – Reporte N° 02</h3>
+                        <div class="module-description">
+                            Profundiza en técnicas avanzadas de visualización y aprende a crear dashboards más complejos con múltiples páginas, filtros dinámicos y elementos interactivos.
+                        </div>
+                    </div>
+
+                    <div class="download-section">
+                        <a href="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Material/Material Módulo 3 Tío Tech PB.rar" 
+                           target="_blank" 
+                           class="download-btn">
+                            <i class="fas fa-download"></i>
+                            Descarga Material
+                        </a>
+                    </div>
+
+                    <div class="video-carousel-container">
+                        <div class="carousel-header">
+                            <div class="carousel-title">Videos del Módulo</div>
+                            <div class="carousel-controls">
+                                <button class="carousel-nav-btn prev" onclick="navigateCarousel('modulo2', -1)" id="modulo2PrevBtn">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="carousel-nav-btn next" onclick="navigateCarousel('modulo2', 1)" id="modulo2NextBtn">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="video-carousel" id="modulo2Carousel">
+                            <div class="video-carousel-track" id="modulo2Track"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Módulo 3: Funciones DAX -->
+                <div class="course-module">
+                    <div class="module-header">
+                        <h3 class="module-title">Funciones DAX para Principiantes</h3>
+                        <div class="module-description">
+                            Domina el lenguaje DAX (Data Analysis Expressions) desde cero. Aprende a crear medidas calculadas, columnas personalizadas y funciones que potenciarán tus análisis de datos.
+                        </div>
+                    </div>
+
+                    <div class="download-section">
+                        <a href="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Material/Material_Modulo_DAX.zip" 
+                           target="_blank" 
+                           class="download-btn">
+                            <i class="fas fa-download"></i>
+                            Descarga Material
+                        </a>
+                    </div>
+
+                    <div class="video-carousel-container">
+                        <div class="carousel-header">
+                            <div class="carousel-title">Videos del Módulo</div>
+                            <div class="carousel-controls">
+                                <button class="carousel-nav-btn prev" onclick="navigateCarousel('modulo3', -1)" id="modulo3PrevBtn">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="carousel-nav-btn next" onclick="navigateCarousel('modulo3', 1)" id="modulo3NextBtn">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="video-carousel" id="modulo3Carousel">
+                            <div class="video-carousel-track" id="modulo3Track"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Módulo 4: Dashboard Reporte N°04 -->
+                <div class="course-module">
+                    <div class="module-header">
+                        <h3 class="module-title">Dashboard – Reporte N° 04</h3>
+                        <div class="module-description">
+                            Construye dashboards profesionales integrando todas las técnicas aprendidas. Enfócate en la usabilidad, diseño y presentación efectiva de datos para stakeholders.
+                        </div>
+                    </div>
+
+                    <div class="download-section">
+                        <a href="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Material/BD_Módulo_05_Tio_Tech.xlsx" 
+                           target="_blank" 
+                           class="download-btn">
+                            <i class="fas fa-download"></i>
+                            Descarga Material
+                        </a>
+                    </div>
+
+                    <div class="video-carousel-container">
+                        <div class="carousel-header">
+                            <div class="carousel-title">Videos del Módulo</div>
+                            <div class="carousel-controls">
+                                <button class="carousel-nav-btn prev" onclick="navigateCarousel('modulo4', -1)" id="modulo4PrevBtn">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="carousel-nav-btn next" onclick="navigateCarousel('modulo4', 1)" id="modulo4NextBtn">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="video-carousel" id="modulo4Carousel">
+                            <div class="video-carousel-track" id="modulo4Track"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Módulo 5: Dashboard Reporte N°05 -->
+                <div class="course-module">
+                    <div class="module-header">
+                        <h3 class="module-title">Dashboard – Reporte N° 05</h3>
+                        <div class="module-description">
+                            Proyecto final del curso básico. Desarrolla un dashboard completo que integre todas las habilidades adquiridas, desde la transformación de datos hasta la presentación ejecutiva.
+                        </div>
+                    </div>
+
+                    <div class="download-section">
+                        <a href="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Material/BD_Módulo_06_Tío_Tech.xlsx" 
+                           target="_blank" 
+                           class="download-btn">
+                            <i class="fas fa-download"></i>
+                            Descarga Material
+                        </a>
+                    </div>
+
+                    <div class="video-carousel-container">
+                        <div class="carousel-header">
+                            <div class="carousel-title">Videos del Módulo</div>
+                            <div class="carousel-controls">
+                                <button class="carousel-nav-btn prev" onclick="navigateCarousel('modulo5', -1)" id="modulo5PrevBtn">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="carousel-nav-btn next" onclick="navigateCarousel('modulo5', 1)" id="modulo5NextBtn">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="video-carousel" id="modulo5Carousel">
+                            <div class="video-carousel-track" id="modulo5Track"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mensaje de Felicitación -->
+                <div class="congratulations">
+                    <h3>🎉 ¡Excelente trabajo!</h3>
+                    <p>Has completado el curso básico de Power BI. Ahora tienes todas las habilidades fundamentales para desenvolverte eficazmente en Power BI. Estás preparado para crear dashboards profesionales, usar funciones DAX básicas y presentar datos de manera efectiva.</p>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="action-btn btn-next" onclick="showCoursePage('intermedio')">
+                        <i class="fas fa-arrow-right"></i>
+                        Continuar al Curso Intermedio
+                    </button>
+                </div>
+            </div>
+
+            <!-- CURSO INTERMEDIO -->
+            <div class="course-section" id="cursoIntermedio" style="display: none;">
+                <div class="page-header">
+                    <h2>🎯 Power BI Intermedio</h2>
+                    <p>¡Bienvenido al siguiente nivel! Profundiza en técnicas avanzadas y domina herramientas profesionales de Power BI.</p>
+                </div>
+
+                <!-- Módulo 1: Power Query -->
+                <div class="course-module">
+                    <div class="module-header">
+                        <h3 class="module-title">Domina Power Query para Power BI</h3>
+                        <div class="module-description">
+                            Aprende a transformar y limpiar datos de manera eficiente usando Power Query. Domina técnicas avanzadas de ETL y automatización de procesos de datos.
+                        </div>
+                    </div>
+
+                    <div class="download-section">
+                        <a href="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Material/Material_Domina_Power_Query.zip" 
+                           target="_blank" 
+                           class="download-btn">
+                            <i class="fas fa-download"></i>
+                            Descarga Material
+                        </a>
+                    </div>
+
+                    <div class="video-carousel-container">
+                        <div class="carousel-header">
+                            <div class="carousel-title">Videos del Módulo</div>
+                            <div class="carousel-controls">
+                                <button class="carousel-nav-btn prev" onclick="navigateCarousel('intermedioModulo1', -1)" id="intermedioModulo1PrevBtn">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="carousel-nav-btn next" onclick="navigateCarousel('intermedioModulo1', 1)" id="intermedioModulo1NextBtn">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="video-carousel" id="intermedioModulo1Carousel">
+                            <div class="video-carousel-track" id="intermedioModulo1Track"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Módulo 2: Buenas Prácticas -->
+                <div class="course-module">
+                    <div class="module-header">
+                        <h3 class="module-title">Recomendaciones y Buenas Prácticas</h3>
+                        <div class="module-description">
+                            Implementa metodologías profesionales y mejores prácticas para desarrollar soluciones escalables, mantenibles y eficientes en Power BI.
+                        </div>
+                    </div>
+
+                    <div class="download-section">
+                        <a href="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Material/Material_Buenas_Practicas.zip" 
+                           target="_blank" 
+                           class="download-btn">
+                            <i class="fas fa-download"></i>
+                            Descarga Material
+                        </a>
+                    </div>
+
+                    <div class="video-carousel-container">
+                        <div class="carousel-header">
+                            <div class="carousel-title">Videos del Módulo</div>
+                            <div class="carousel-controls">
+                                <button class="carousel-nav-btn prev" onclick="navigateCarousel('intermedioModulo2', -1)" id="intermedioModulo2PrevBtn">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="carousel-nav-btn next" onclick="navigateCarousel('intermedioModulo2', 1)" id="intermedioModulo2NextBtn">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="video-carousel" id="intermedioModulo2Carousel">
+                            <div class="video-carousel-track" id="intermedioModulo2Track"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Módulo 3: DAX II -->
+                <div class="course-module">
+                    <div class="module-header">
+                        <h3 class="module-title">Funciones DAX II</h3>
+                        <div class="module-description">
+                            Profundiza en funciones DAX avanzadas. Aprende funciones de tiempo, contexto de filtro, y técnicas complejas para análisis de datos sofisticados.
+                        </div>
+                    </div>
+
+                    <div class="download-section">
+                        <a href="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Material/Material_Modulo_DAX_II.zip" 
+                           target="_blank" 
+                           class="download-btn">
+                            <i class="fas fa-download"></i>
+                            Descarga Material
+                        </a>
+                    </div>
+
+                    <div class="video-carousel-container">
+                        <div class="carousel-header">
+                            <div class="carousel-title">Videos del Módulo</div>
+                            <div class="carousel-controls">
+                                <button class="carousel-nav-btn prev" onclick="navigateCarousel('intermedioModulo3', -1)" id="intermedioModulo3PrevBtn">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="carousel-nav-btn next" onclick="navigateCarousel('intermedioModulo3', 1)" id="intermedioModulo3NextBtn">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="video-carousel" id="intermedioModulo3Carousel">
+                            <div class="video-carousel-track" id="intermedioModulo3Track"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Módulo 4: Tabla de Calendario -->
+                <div class="course-module">
+                    <div class="module-header">
+                        <h3 class="module-title">La Tabla de Calendario con DAX y M</h3>
+                        <div class="module-description">
+                            Domina la creación y optimización de tablas de calendario usando tanto DAX como el lenguaje M. Esencial para análisis temporales avanzados y intelligence de tiempo.
+                        </div>
+                    </div>
+
+                    <div class="download-section">
+                        <a href="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Material/Material_Calendario_M.zip" 
+                           target="_blank" 
+                           class="download-btn">
+                            <i class="fas fa-download"></i>
+                            Descarga Material
+                        </a>
+                    </div>
+
+                    <div class="video-carousel-container">
+                       <div class="carousel-header">
+                            <div class="carousel-title">Videos del Módulo</div>
+                            <div class="carousel-controls">
+                                <button class="carousel-nav-btn prev" onclick="navigateCarousel('intermedioModulo4', -1)" id="intermedioModulo4PrevBtn">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="carousel-nav-btn next" onclick="navigateCarousel('intermedioModulo4', 1)" id="intermedioModulo4NextBtn">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="video-carousel" id="intermedioModulo4Carousel">
+                            <div class="video-carousel-track" id="intermedioModulo4Track"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="congratulations">
+                    <h3>🎉 ¡Felicitaciones!</h3>
+                    <p>Has completado el curso intermedio de Power BI. La práctica constante te transformará en un analista de Power BI avanzado.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================== -->
+    <!--       PÁGINA FUNCIONES ESPECÍFICAS     -->
+    <!-- ====================================== -->
+    
+    <div class="page" id="functionsPage">
+        <div class="functions-page">
+            <div class="page-header">
+                <h2>🔧 Funciones Específicas Power BI</h2>
+                <p>Videos tutoriales para funciones y casos específicos de Power BI</p>
+            </div>
+            
+            <div class="functions-container" id="functionsContainer">
+                    <div class="function-video-item">
+					<div class="function-video-thumbnail" onclick="openVideo('https://www.youtube.com/watch?v=rKreQw9JGvo')">
+                        <img src="https://img.youtube.com/vi/rKreQw9JGvo/maxresdefault.jpg" alt="DAX para principiantes" 
+                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDM1MCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzNTAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMzMzIi8+Cjx0ZXh0IHg9IjE3NSIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSIgZmlsbD0iI2ZmYzEwNyIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiPfCfjoUgJHt2aWRlby50aXRsZX08L3RleHQ+Cjwvc3ZnPg=='" />
+                        <button class="function-play-btn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="function-video-info">
+                        <h3>DAX para principiantes</h3>
+                        <p>Breve introduccion a DAX</p>
+                    </div>
+                </div>
+				<!-- Los videos se cargarán aquí dinámicamente -->
+            </div>
+            
+            <!-- Botón flotante para agregar videos -->
+            <button class="add-video-btn" onclick="openAddVideoModal()">
+                <i class="fas fa-plus"></i>
+            </button>
+			<!-- Botón para generar HTML -->
+			<button class="generate-html-btn" onclick="generateHtmlCode()" title="Generar código HTML" style="display: none;">
+				<i class="fas fa-code"></i>
+			</button>
+        </div>
+    </div>
+
+    <!-- ====================================== -->
+    <!--          MODAL AGREGAR VIDEO           -->
+    <!-- ====================================== -->
+    
+    <div id="addVideoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Agregar Nuevo Video</h2>
+                <span class="close" onclick="closeAddVideoModal()">&times;</span>
+            </div>
+            <form id="addVideoForm">
+                <div class="form-group">
+                    <label for="videoTitle">Título del Video:</label>
+                    <input type="text" id="videoTitle" name="videoTitle" required placeholder="Ej: Cómo crear un gráfico de barras">
+                </div>
+                <div class="form-group">
+                    <label for="videoDescription">Descripción:</label>
+                    <textarea id="videoDescription" name="videoDescription" required placeholder="Breve descripción de lo que enseña el video"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="videoUrl">URL de YouTube:</label>
+                    <input type="url" id="videoUrl" name="videoUrl" required placeholder="https://youtu.be/...">
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn-modal primary">Agregar Video</button>
+                    <button type="button" class="btn-modal secondary" onclick="closeAddVideoModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ====================================== -->
+    <!--          MODAL DE VIDEO INTEGRADO      -->
+    <!-- ====================================== -->
+    
+    <div id="videoModal" class="video-modal">
+        <div class="video-modal-content">
+            <div class="video-modal-header">
+                <h3 class="video-modal-title" id="videoModalTitle">Reproduciendo Video</h3>
+                <button class="video-modal-close" onclick="closeVideoModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="video-modal-player">
+                <iframe id="videoModalIframe" class="video-modal-iframe" 
+                        src="" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ====================================== //
+        //            DATOS DE VIDEOS             //
+        // ====================================== //
+        
+        const videosData = {
+            modulo1: [
+                'https://youtu.be/p2ewyOKQS7w',
+                'https://youtu.be/C47X8Vr74lo',
+                'https://youtu.be/Vox4UcyBscg',
+                'https://youtu.be/zYqYF-9VyCQ',
+                'https://youtu.be/N8a1xZnAYWc',
+                'https://youtu.be/9QDs3RliyjU',
+                'https://youtu.be/iIkq4Em9XNg',
+                'https://youtu.be/Er9Ucuu8kFs'
+            ],
+            modulo2: [
+                'https://youtu.be/HSYy6iCsSNo',
+                'https://youtu.be/Oe5c1E5kKhE',
+                'https://youtu.be/gfIzwWBLQOs',
+                'https://youtu.be/ouCKI9PqoVw',
+                'https://youtu.be/Zev9RTtNilU',
+                'https://youtu.be/BdzX_yrXPyE',
+                'https://youtu.be/GjVUVIcbE2s',
+                'https://youtu.be/bfvXPHwTVnc',
+                'https://youtu.be/E4mSBFHStOQ',
+                'https://youtu.be/HUZk7b6Rmwc',
+                'https://youtu.be/-CDYIO77BcQ',
+                'https://youtu.be/r1F4f8xcIKI',
+                'https://youtu.be/VFjDfW4n-6M',
+                'https://youtu.be/eO23f4ahda8',
+                'https://youtu.be/H05tUYiBJsA'
+            ],
+            modulo3: [
+                'https://youtu.be/2ztgPMxFeBQ',
+                'https://youtu.be/KL3BoCW4r04',
+                'https://youtu.be/zz69txcrK-c',
+                'https://youtu.be/IFhs6jSY5tg',
+                'https://youtu.be/lZuXqvV50Hg',
+                'https://youtu.be/LYzaNay_CyA',
+                'https://youtu.be/f2brq4iV_jA',
+                'https://youtu.be/3cQ6elJvdOE'
+            ],
+            modulo4: [
+                'https://youtu.be/hB1TG5imZgs',
+                'https://youtu.be/cSH0ajkGF7s',
+                'https://youtu.be/4Y1oUR5wHKk',
+                'https://youtu.be/fmOYi7hB08E',
+                'https://youtu.be/YggtoK8WcsM',
+                'https://youtu.be/Jky6TQ6qda4',
+                'https://youtu.be/0USL6Va7TfE',
+                'https://youtu.be/546Z_vD_zII'
+            ],
+            modulo5: [
+                'https://youtu.be/NcA8o79kZUI',
+                'https://youtu.be/iXcAzyCmjvo',
+                'https://youtu.be/2F0O6wNf3tA',
+                'https://youtu.be/oOXoWOi9NNg',
+                'https://youtu.be/wmHxol4zW74',
+                'https://youtu.be/JiMbswHtbd8',
+                'https://youtu.be/aevKqt6x4_8',
+                'https://youtu.be/koXWjiRZAQk',
+                'https://youtu.be/JjxXKIH7J7U',
+                'https://youtu.be/0q3UhU0A3Ew',
+                'https://youtu.be/G_E2ZXDvowo',
+                'https://youtu.be/L5J3gy_cVAU',
+                'https://youtu.be/yGOGaBP4I0M',
+                'https://youtu.be/qySv5-xbO54'
+            ],
+            intermedioModulo1: [
+                'https://youtu.be/4vTTt11RPRs',
+                'https://youtu.be/RvNrrStLyNE',
+                'https://youtu.be/Yj296tRLnQI',
+                'https://youtu.be/xTuN_V4eYPU',
+                'https://youtu.be/GmKAfMnu1p4',
+                'https://youtu.be/6O5hoslq-xI',
+                'https://youtu.be/5XDf3lB9bjE',
+                'https://youtu.be/c-MUF5UgcQQ'
+            ],
+            intermedioModulo2: [
+                'https://youtu.be/6PcU4Rxmf7A',
+                'https://youtu.be/raEYVjnmqTw',
+                'https://youtu.be/_ZQzqIXtSAk'
+            ],
+            intermedioModulo3: [
+                'https://youtu.be/w4d729bosms',
+                'https://youtu.be/cTE-CPiIhVc',
+                'https://youtu.be/00I2ern-PQE',
+                'https://youtu.be/2PEN9q_GlO4',
+                'https://youtu.be/JLNJYCTpYdc',
+                'https://youtu.be/Hdlo43GyTvs',
+                'https://youtu.be/rKsQ_qPCr3s',
+                'https://youtu.be/nfKZNFzSi_s',
+                'https://youtu.be/X3HyBVfeAmk'
+            ],
+            intermedioModulo4: [
+                'https://youtu.be/tEmVlRpEiHM',
+                'https://youtu.be/mXlDFdCe86E',
+                'https://youtu.be/oUOsYfQei68'
+            ]
+        };
+
+        // Títulos de videos obtenidos de YouTube
+        const videoTitles = {
+            'p2ewyOKQS7w': '8. Importar datos desde un archivo Excel a Power BI',
+            'C47X8Vr74lo': '9. Transformar datos con Power Query',
+            'Vox4UcyBscg': '10. Modelado de Datos',
+            'zYqYF-9VyCQ': '11. Gráficos de barras, columnas, Circular',
+            'N8a1xZnAYWc': '12. Visualizaciones de tipo Tarjetas y Slicer',
+            '9QDs3RliyjU': '13. Aplicando Formato al reporte',
+            'iIkq4Em9XNg': '14. Diferencia entre la vista de datos y Power Query',
+            'Er9Ucuu8kFs': '15. Opciones de Página y bloqueo de objetos',
+            'HSYy6iCsSNo': '17. Conexión de datos y relación de tablas',
+            'Oe5c1E5kKhE': '18. Uso de la visualización Tabla y Matriz',
+            'gfIzwWBLQOs': '19. Columna Condicional para agrupar según el rango de números',
+            'ouCKI9PqoVw': '20. Visualización tipo TreeMap',
+            'Zev9RTtNilU': '21. Visualización tipo Mapa',
+            'BdzX_yrXPyE': '22. Uso de la segmentación de datos',
+            'GjVUVIcbE2s': '23. Importando más tablas al modelo de datos',
+            'bfvXPHwTVnc': '24. Columna Condicional en Power BI – función Si en Power BI',
+            'E4mSBFHStOQ': '25. Formato Condicional a la visualización tipo mapa',
+            'HUZk7b6Rmwc': '26. Formato Condicional a la visualización tipo Matriz',
+            '-CDYIO77BcQ': '27. Visualización de tipo Dispersión',
+            'r1F4f8xcIKI': '28. Vista tabla y modo enfoque',
+            'VFjDfW4n-6M': '29. Niveles de jerarquía',
+            'eO23f4ahda8': '30. Grupos de Jerarquía',
+            'H05tUYiBJsA': '31. Paneles de filtros',
+            '2ztgPMxFeBQ': '32. Diferencia entre una medida Explícita y una medida Implicita',
+            'KL3BoCW4r04': '33. Las funciones SUM y SUMX',
+            'zz69txcrK-c': '34. La función CALCULATE(Expression,[filter1],…)',
+            'IFhs6jSY5tg': '35. La función IF(Logical, True, False)',
+            'lZuXqvV50Hg': '36. Contar con COUNTROWS([Table])',
+            'LYzaNay_CyA': '37. Calcular el Promedio con AVERAGEX([TableNameOrColumnName])',
+            'f2brq4iV_jA': '38. Obtener el máximo y mínimo con Max, MaxX, Min, MinX',
+            '3cQ6elJvdOE': '39. Concatenar valores con CONCATENATE(text1,text2)',
+            'hB1TG5imZgs': '40. Curso de Power BI – dashboard con Fotografías',
+            'cSH0ajkGF7s': '41. Función DistinctCount y SUM (Aplicando Estilos a filtros y tarjetas)',
+            '4Y1oUR5wHKk': '42. Calcular el porcentajes con las Funciones DIVIDE, Calculate y All)',
+            'fmOYi7hB08E': '43. Iniciar sesión en Power BI Service',
+            'YggtoK8WcsM': '44. Insertar Fotografía por vendedor',
+            'Jky6TQ6qda4': '45. Visualización tipo Columnas',
+            '0USL6Va7TfE': '46. Creación del fondo para Power BI',
+            '546Z_vD_zII': '47. Función Concatenex y TopN para obtener Nombre del Producto mas vendido',
+            'NcA8o79kZUI': '48. Conexión a un origen de datos',
+            'iXcAzyCmjvo': '49. Formula DAX Count',
+            '2F0O6wNf3tA': '50. Fórmula DAX Average',
+            'oOXoWOi9NNg': '51. Formula DAX YearFrac',
+            'wmHxol4zW74': '52. Fórmula DAX If – I',
+            'JiMbswHtbd8': '53. Fórmula DAX IF – II',
+            'aevKqt6x4_8': '54. Diseñando la Plantilla para nuestro Dashboard',
+            'koXWjiRZAQk': '55. Botones para navegación en Power BI',
+            'JjxXKIH7J7U': '56. Marcadores BookMarks en Power BI',
+            '0q3UhU0A3Ew': '57. Publicar y compartir informes',
+            'G_E2ZXDvowo': '58. Opciones de Preguntas y Respuestas',
+            'L5J3gy_cVAU': '59. Insertar Vínculos',
+            'yGOGaBP4I0M': '60. Visualización Tipo Mapa Coroplético',
+            'qySv5-xbO54': '61. Filtros Top N y obtener detalles',
+            '4vTTt11RPRs': '62. Edición de Columnas (Eliminar, dividir y Extraer)',
+            'RvNrrStLyNE': '63. Creación de columnas Condicionales y personalizadas',
+            'Yj296tRLnQI': '64. Configuración regional en Power Query',
+            'xTuN_V4eYPU': '65. Combinar Consultas en Power Query',
+            'GmKAfMnu1p4': '66. Anexar Consultas en Power Query',
+            '6O5hoslq-xI': '67. Agrupar datos en Power Query',
+            '5XDf3lB9bjE': '68. Cargar en el modelo de datos con Power Query',
+            'c-MUF5UgcQQ': '69. Anular Dinamización de Columnas en Power Query',
+            '6PcU4Rxmf7A': '70. Buenas Practicas con tablas Excel',
+            'raEYVjnmqTw': '71. Buenas Practicas con Modelado de Datos',
+            '_ZQzqIXtSAk': '72. Buenas Practicas con DAX',
+            'w4d729bosms': '73. Funciones de Fechas',
+            'cTE-CPiIhVc': '74. Funciones Lógicas y condicionales',
+            '00I2ern-PQE': '75. Funciones de Texto',
+            '2PEN9q_GlO4': '76. Función Related',
+            'JLNJYCTpYdc': '77. Funciones Matemáticas y Estadísticas',
+            'Hdlo43GyTvs': '78. Función Calculate',
+            'rKsQ_qPCr3s': '79. Función ALL/Filter',
+            'nfKZNFzSi_s': '80. Función RankX',
+            'X3HyBVfeAmk': '81. Función Switch',
+            'tEmVlRpEiHM': '82. Creación de Tablas Calendario',
+            'mXlDFdCe86E': '83. Tabla Calendario con DAX',
+            'oUOsYfQei68': '84. Tabla Calendario con M'
+        };
+
+        // Duraciones aproximadas de los videos (en minutos)
+        const videoDurations = {
+            'p2ewyOKQS7w': '05:25',
+            'C47X8Vr74lo': '07:49',
+            'Vox4UcyBscg': '05:22',
+            'zYqYF-9VyCQ': '15:22',
+            'N8a1xZnAYWc': '10:16',
+            '9QDs3RliyjU': '13:06',
+            'iIkq4Em9XNg': '03:18',
+            'Er9Ucuu8kFs': '01:24',
+            'HSYy6iCsSNo': '16:45',
+            'Oe5c1E5kKhE': '07:54',
+            'gfIzwWBLQOs': '09:51',
+            'ouCKI9PqoVw': '05:06',
+            'Zev9RTtNilU': '07:55',
+            'BdzX_yrXPyE': '06:49',
+            'GjVUVIcbE2s': '08:37',
+            'bfvXPHwTVnc': '07:10',
+            'E4mSBFHStOQ': '07:23',
+            'HUZk7b6Rmwc': '07:32',
+            '-CDYIO77BcQ': '05:55',
+            'r1F4f8xcIKI': '04:50',
+            'VFjDfW4n-6M': '08:00',
+            'eO23f4ahda8': '03:31',
+            'H05tUYiBJsA': '08:46',
+            '2ztgPMxFeBQ': '14:33',
+            'KL3BoCW4r04': '22:25',
+            'zz69txcrK-c': '25:01',
+            'IFhs6jSY5tg': '15:46',
+            'lZuXqvV50Hg': '20:38',
+            'LYzaNay_CyA': '16:25',
+            'f2brq4iV_jA': '09:35',
+            '3cQ6elJvdOE': '09:36',
+            'hB1TG5imZgs': '19:46',
+            'cSH0ajkGF7s': '13:50',
+            '4Y1oUR5wHKk': '13:55',
+            'fmOYi7hB08E': '08:16',
+            'YggtoK8WcsM': '17:40',
+            'Jky6TQ6qda4': '09:48',
+            '0USL6Va7TfE': '29:46',
+            '546Z_vD_zII': '20:20',
+            'NcA8o79kZUI': '09:29',
+            'iXcAzyCmjvo': '12:12',
+            '2F0O6wNf3tA': '06:00',
+            'oOXoWOi9NNg': '09:48',
+            'wmHxol4zW74': '09:31',
+            'JiMbswHtbd8': '17:32',
+            'aevKqt6x4_8': '33:23',
+            'koXWjiRZAQk': '12:32',
+            'JjxXKIH7J7U': '05:49',
+            '0q3UhU0A3Ew': '15:44',
+            'G_E2ZXDvowo': '05:27',
+            'L5J3gy_cVAU': '03:13',
+            'yGOGaBP4I0M': '06:14',
+            'qySv5-xbO54': '06:00',
+            '4vTTt11RPRs': '16:51',
+            'RvNrrStLyNE': '14:14',
+            'Yj296tRLnQI': '08:29',
+            'xTuN_V4eYPU': '12:00',
+            'GmKAfMnu1p4': '09:43',
+            '6O5hoslq-xI': '08:11',
+            '5XDf3lB9bjE': '08:45',
+            'c-MUF5UgcQQ': '08:53',
+            '6PcU4Rxmf7A': '10:53',
+            'raEYVjnmqTw': '25:35',
+            '_ZQzqIXtSAk': '10:43',
+            'w4d729bosms': '10:16',
+            'cTE-CPiIhVc': '25:06',
+            '00I2ern-PQE': '14:38',
+            '2PEN9q_GlO4': '08:41',
+            'JLNJYCTpYdc': '16:59',
+            'Hdlo43GyTvs': '31:04',
+            'rKsQ_qPCr3s': '17:23',
+            'nfKZNFzSi_s': '22:53',
+            'X3HyBVfeAmk': '14:33',
+            'tEmVlRpEiHM': '16:59',
+            'mXlDFdCe86E': '33:26',
+            'oUOsYfQei68': '24:39'
+        };
+
+        // Duraciones del curso inicial (en minutos)
+        const initialCourseDurations = {
+            'video1': 74, // ~74 minutos
+            'video2': 72, // ~72 minutos  
+            'video3': 59  // ~59 minutos
+        };
+		
+        // Estado del carrusel fluido
+        const carouselState = {
+            modulo1: { currentPosition: 0, maxScroll: 0, isAtStart: true, isAtEnd: false },
+            modulo2: { currentPosition: 0, maxScroll: 0, isAtStart: true, isAtEnd: false },
+            modulo3: { currentPosition: 0, maxScroll: 0, isAtStart: true, isAtEnd: false },
+            modulo4: { currentPosition: 0, maxScroll: 0, isAtStart: true, isAtEnd: false },
+            modulo5: { currentPosition: 0, maxScroll: 0, isAtStart: true, isAtEnd: false },
+            intermedioModulo1: { currentPosition: 0, maxScroll: 0, isAtStart: true, isAtEnd: false },
+            intermedioModulo2: { currentPosition: 0, maxScroll: 0, isAtStart: true, isAtEnd: false },
+            intermedioModulo3: { currentPosition: 0, maxScroll: 0, isAtStart: true, isAtEnd: false },
+            intermedioModulo4: { currentPosition: 0, maxScroll: 0, isAtStart: true, isAtEnd: false }
+        };
+
+        // ====================================== //
+        //           FUNCIONES DE TIEMPO          //
+        // ====================================== //
+
+        function parseTimeToMinutes(timeString) {
+            if (!timeString) return 0;
+            
+            const parts = timeString.split(':');
+            if (parts.length === 2) {
+                // MM:SS format
+                const minutes = parseInt(parts[0]) || 0;
+                const seconds = parseInt(parts[1]) || 0;
+                return minutes + (seconds / 60);
+            } else if (parts.length === 3) {
+                // HH:MM:SS format  
+                const hours = parseInt(parts[0]) || 0;
+                const minutes = parseInt(parts[1]) || 0;
+                const seconds = parseInt(parts[2]) || 0;
+                return (hours * 60) + minutes + (seconds / 60);
+            }
+            return 0;
+        }
+
+        function formatMinutesToTime(totalMinutes) {
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = Math.floor(totalMinutes % 60);
+            const seconds = Math.floor((totalMinutes % 1) * 60);
+            
+            if (hours > 0) {
+                return `${hours}h ${minutes}m ${seconds}s`;
+            } else if (minutes > 0) {
+                return `${minutes}m ${seconds}s`;
+            } else {
+                return `${seconds}s`;
+            }
+        }
+
+        function calculateTotalCourseTime() {
+            let totalMinutes = 0;
+            
+            // Tiempo del curso inicial
+            Object.values(initialCourseDurations).forEach(duration => {
+                totalMinutes += duration;
+            });
+            
+            // Tiempo de todos los módulos
+            Object.keys(videosData).forEach(moduleId => {
+                const videos = videosData[moduleId];
+                videos.forEach(video => {
+                    const videoId = getYouTubeVideoId(video);
+                    const duration = videoDurations[videoId];
+                    if (duration) {
+                        totalMinutes += parseTimeToMinutes(duration);
+                    }
+                });
+            });
+            
+            return totalMinutes;
+        }
+
+        function calculateModuleTime(moduleId, videoIds = null) {
+            let totalMinutes = 0;
+            
+            if (videoIds) {
+                // Para curso inicial
+                videoIds.forEach(id => {
+                    totalMinutes += initialCourseDurations[id] || 0;
+                });
+            } else {
+                // Para otros módulos
+                const videos = videosData[moduleId];
+                if (videos) {
+                    videos.forEach(video => {
+                        const videoId = getYouTubeVideoId(video);
+                        const duration = videoDurations[videoId];
+                        if (duration) {
+                            totalMinutes += parseTimeToMinutes(duration);
+                        }
+                    });
+                }
+            }
+            
+            return totalMinutes;
+        }
+
+        // ====================================== //
+        //        GENERADOR DE REPORTES PDF       //
+        // ====================================== //
+
+        function generateProgressReport() {
+    const studentName = document.getElementById('studentName').value.trim();
+    
+    if (!studentName) {
+        alert('Por favor, ingresa tu nombre antes de generar el informe.');
+        return;
+    }
+
+    try {
+        // Crear nuevo documento PDF
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        // Colores corporativos
+        const goldColor = [255, 193, 7];
+        const darkBg = [26, 26, 26];
+        const lightGray = [224, 224, 224];
+        const white = [255, 255, 255];
+        
+        // Fondo de encabezado
+        doc.setFillColor(...darkBg);
+        doc.rect(0, 0, 210, 50, 'F');
+        
+        // Título principal
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(24);
+        doc.setTextColor(...goldColor);
+        doc.text('INFORME DE PROGRESO', 20, 25);
+        doc.setFontSize(16);
+        doc.text('CURSO POWER BI', 20, 40);
+        
+        // Línea decorativa dorada
+        doc.setDrawColor(...goldColor);
+        doc.setLineWidth(2);
+        doc.line(20, 55, 190, 55);
+        
+        // Información del estudiante en un recuadro
+        doc.setFillColor(248, 249, 250);
+        doc.rect(20, 65, 170, 25, 'F');
+        doc.setDrawColor(200, 200, 200);
+        doc.rect(20, 65, 170, 25, 'S');
+        
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(12);
+        doc.setTextColor(0, 0, 0);
+        doc.text(`Estudiante: ${studentName}`, 25, 75);
+        doc.text(`Fecha: ${new Date().toLocaleDateString('es-ES')}`, 25, 85);
+        
+        // Calcular estadísticas generales
+        let totalVideos = 0;
+        let watchedVideos = 0;
+        
+        // Videos del curso inicial
+        const initialVideoIds = ['video1', 'video2', 'video3'];
+        totalVideos += initialVideoIds.length;
+        initialVideoIds.forEach(id => {
+            if (getWatchedStatus(id)) watchedVideos++;
+        });
+        
+        // Videos de otros módulos
+        Object.keys(videosData).forEach(moduleId => {
+            const videos = videosData[moduleId];
+            totalVideos += videos.length;
+            
+            videos.forEach(video => {
+                const videoId = getYouTubeVideoId(video);
+                const checkboxId = `video_${moduleId}_${videoId}`;
+                if (getWatchedStatus(checkboxId)) watchedVideos++;
+            });
+        });
+        
+        const percentage = totalVideos > 0 ? Math.round((watchedVideos / totalVideos) * 100) : 0;
+        const pendingVideos = totalVideos - watchedVideos;
+        
+		// Resumen general con diseño elegante y minimalista
+		doc.setFont('helvetica', 'bold');
+		doc.setFontSize(16);
+		doc.setTextColor(...goldColor);
+		doc.text('RESUMEN GENERAL', 20, 105);
+		
+		// Crear tabla de resumen elegante
+		const statsY = 115;
+		doc.setFillColor(250, 250, 250);
+		doc.rect(20, statsY, 150, 20, 'F');
+		doc.setDrawColor(220, 220, 220);
+		doc.rect(20, statsY, 150, 20, 'S');
+		
+		// Líneas divisorias verticales
+		doc.line(57.5, statsY, 57.5, statsY + 20);
+		doc.line(95, statsY, 95, statsY + 20);
+		doc.line(132.5, statsY, 132.5, statsY + 20);
+		
+		// Números principales
+		doc.setFont('helvetica', 'bold');
+		doc.setFontSize(16);
+		doc.setTextColor(0, 0, 0);
+		doc.text(String(totalVideos), 35, statsY + 8);
+		doc.text(String(watchedVideos), 72, statsY + 8);
+		doc.text(String(pendingVideos), 110, statsY + 8);
+		doc.text(`${percentage}%`, 148, statsY + 8);
+		
+		// Etiquetas
+		doc.setFont('helvetica', 'normal');
+		doc.setFontSize(8);
+		doc.setTextColor(100, 100, 100);
+		doc.text('VIDEOS TOTALES', 25, statsY + 16);
+		doc.text('VIDEOS VISTOS', 65, statsY + 16);
+		doc.text('PENDIENTES', 105, statsY + 16);
+		doc.text('COMPLETADO', 140, statsY + 16);
+        
+        // Tabla de progreso por módulos
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(16);
+        doc.setTextColor(...goldColor);
+        doc.text('PROGRESO POR MÓDULOS', 20, 155);
+        
+        // Encabezado de tabla
+        const tableY = 165;
+        const colWidths = [80, 25, 25, 25];
+        const rowHeight = 8;
+        
+        // Fondo del encabezado
+        doc.setFillColor(...goldColor);
+        doc.rect(20, tableY, 155, rowHeight, 'F');
+        
+        // Texto del encabezado
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(...white);
+        doc.text('MÓDULO', 22, tableY + 5);
+        doc.text('TOTAL', 105, tableY + 5);
+        doc.text('VISTOS', 128, tableY + 5);
+        doc.text('%', 158, tableY + 5);
+        
+        // Datos de la tabla
+        
+        let currentY = tableY + rowHeight;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(0, 0, 0);
+        
+		// Definir los módulos con sus IDs correctos
+		const moduleData = [
+			{ name: 'Curso Inicial', id: 'inicial', videoIds: ['video1', 'video2', 'video3'] },
+			{ name: 'Dashboard - Reporte N° 01', id: 'modulo1', videos: videosData.modulo1 },
+			{ name: 'Dashboard - Reporte N° 02', id: 'modulo2', videos: videosData.modulo2 },
+			{ name: 'Funciones DAX', id: 'modulo3', videos: videosData.modulo3 },
+			{ name: 'Dashboard - Reporte N° 04', id: 'modulo4', videos: videosData.modulo4 },
+			{ name: 'Dashboard - Reporte N° 05', id: 'modulo5', videos: videosData.modulo5 },
+			{ name: 'Power Query', id: 'intermedioModulo1', videos: videosData.intermedioModulo1 },
+			{ name: 'Buenas Prácticas', id: 'intermedioModulo2', videos: videosData.intermedioModulo2 },
+			{ name: 'Funciones DAX II', id: 'intermedioModulo3', videos: videosData.intermedioModulo3 },
+			{ name: 'Tabla de Calendario', id: 'intermedioModulo4', videos: videosData.intermedioModulo4 }
+		];
+		
+		moduleData.forEach((module, index) => {
+			let moduleTotal, moduleWatched;
+			
+			if (module.videoIds) {
+				moduleTotal = module.videoIds.length;
+				moduleWatched = module.videoIds.filter(id => getWatchedStatus(id)).length;
+			} else {
+				moduleTotal = module.videos ? module.videos.length : 0;
+				moduleWatched = 0;
+				
+				if (module.videos) {
+					module.videos.forEach(video => {
+						const videoId = getYouTubeVideoId(video);
+						const checkboxId = `video_${module.id}_${videoId}`;
+						if (getWatchedStatus(checkboxId)) moduleWatched++;
+					});
+				}
+			}
+            
+            const modulePercentage = moduleTotal > 0 ? Math.round((moduleWatched / moduleTotal) * 100) : 0;
+            
+            // Alternar color de fondo
+            if (index % 2 === 0) {
+                doc.setFillColor(248, 249, 250);
+                doc.rect(20, currentY, 155, rowHeight, 'F');
+            }
+            
+            // Línea de separación
+            doc.setDrawColor(200, 200, 200);
+            doc.line(20, currentY, 175, currentY);
+            
+            // Datos de la fila
+            doc.text(module.name, 22, currentY + 5);
+            doc.text(String(moduleTotal), 108, currentY + 5);
+            doc.text(String(moduleWatched), 132, currentY + 5);
+            
+            // Porcentaje con color según progreso
+            if (modulePercentage === 100) {
+                doc.setTextColor(40, 167, 69); // Verde
+            } else if (modulePercentage >= 50) {
+                doc.setTextColor(...goldColor); // Dorado
+            } else {
+                doc.setTextColor(220, 53, 69); // Rojo
+            }
+            doc.text(`${modulePercentage}%`, 158, currentY + 5);
+            doc.setTextColor(0, 0, 0); // Volver a negro
+            
+            currentY += rowHeight;
+        });
+        
+        // Borde final de tabla
+        doc.setDrawColor(200, 200, 200);
+        doc.line(20, currentY, 175, currentY);
+        doc.rect(20, tableY, 155, currentY - tableY, 'S');
+        
+        // Pie de página elegante
+        doc.setFillColor(...darkBg);
+        doc.rect(0, 270, 210, 27, 'F');
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        doc.setTextColor(...lightGray);
+        doc.text('🎓 Sistema de Capacitación Power BI - GESSOF', 20, 280);
+        doc.text(`Generado el ${new Date().toLocaleDateString('es-ES')}`, 20, 287);
+        
+        // Guardar el PDF
+        const fileName = `Informe_PowerBI_${studentName.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0, 10)}.pdf`;
+        doc.save(fileName);
+        
+    } catch (error) {
+        console.error('Error al generar el informe:', error);
+        alert('Hubo un error al generar el informe. Por favor, intenta de nuevo.');
+    }
+}
+
+        // ====================================== //
+        //           FUNCIONES PRINCIPALES        //
+        // ====================================== //
+        
+        // Variables globales para el modal de video
+        let currentVideoId = '';
+        let currentCheckboxId = '';
+
+        function getYouTubeVideoId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        function getYouTubeEmbedUrl(url) {
+            const videoId = getYouTubeVideoId(url);
+            if (!videoId) return null;
+            return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+        }
+
+        function openVideoModal(url, title = '', checkboxId = '') {
+            const embedUrl = getYouTubeEmbedUrl(url);
+            if (!embedUrl) {
+                console.error('URL de video inválida:', url);
+                return;
+            }
+
+            // Guardar datos del video actual
+            currentVideoId = getYouTubeVideoId(url);
+            currentCheckboxId = checkboxId;
+
+            // Configurar modal
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('videoModalIframe');
+            const modalTitle = document.getElementById('videoModalTitle');
+
+            modalTitle.textContent = title || 'Reproduciendo Video';
+            iframe.src = embedUrl;
+
+            // Mostrar modal
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // Marcar automáticamente como visto al abrir
+            if (checkboxId) {
+                const checkbox = document.getElementById(checkboxId);
+                if (checkbox && !checkbox.checked) {
+                    checkbox.checked = true;
+                    saveWatchedStatus(checkboxId, true);
+                }
+            }
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('videoModalIframe');
+
+            // Detener video
+            iframe.src = '';
+            
+            // Ocultar modal
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+
+            // Limpiar variables
+            currentVideoId = '';
+            currentCheckboxId = '';
+            
+            // Deseleccionar video actual si existe
+            if (selectedVideoThumbnail) {
+                selectedVideoThumbnail.classList.remove('selected');
+                selectedVideoThumbnail = null;
+            }
+        }
+
+        // Función de compatibilidad para abrir videos en nueva ventana (funciones específicas)
+        function openVideo(url) {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
+        // Variables para manejo de selección de video
+        let selectedVideoThumbnail = null;
+
+        function selectVideo(element, videoUrl, videoTitle, checkboxId) {
+            // Deseleccionar video anterior si existe
+            if (selectedVideoThumbnail && selectedVideoThumbnail !== element) {
+                selectedVideoThumbnail.classList.remove('selected');
+            }
+            
+            // Seleccionar el video actual
+            element.classList.add('selected');
+            selectedVideoThumbnail = element;
+            
+            // Guardar datos del video en el elemento para el botón de play
+            element.dataset.videoUrl = videoUrl;
+            element.dataset.videoTitle = videoTitle;
+            element.dataset.checkboxId = checkboxId;
+        }
+
+        function playSelectedVideo(event) {
+            event.stopPropagation(); // Evitar que se dispare el click del thumbnail
+            
+            if (selectedVideoThumbnail) {
+                const videoUrl = selectedVideoThumbnail.dataset.videoUrl;
+                const videoTitle = selectedVideoThumbnail.dataset.videoTitle;
+                const checkboxId = selectedVideoThumbnail.dataset.checkboxId;
+                
+                openVideoModal(videoUrl, videoTitle, checkboxId);
+            }
+        }
+
+        // Deseleccionar video cuando se hace click fuera
+        document.addEventListener('click', function(e) {
+            // Si el click no es en un video thumbnail ni en un botón de play
+            if (!e.target.closest('.carousel-video-thumbnail') && !e.target.closest('.carousel-play-btn')) {
+                if (selectedVideoThumbnail) {
+                    selectedVideoThumbnail.classList.remove('selected');
+                    selectedVideoThumbnail = null;
+                }
+            }
+        });
+
+        function escapeForAttribute(str) {
+            return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        // Función para crear videos del carrusel (para básico e intermedio)
+        function createCarouselVideoItem(videoUrl, index, moduleId) {
+            const videoId = getYouTubeVideoId(videoUrl);
+            const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+            const videoTitle = videoTitles[videoId] || `Video ${index + 1}`;
+            const videoDuration = videoDurations[videoId] || 'N/A';
+            const checkboxId = `video_${moduleId}_${videoId}`;
+            const safeTitle = escapeForAttribute(videoTitle);
+            const uniqueId = `thumb_${moduleId}_${videoId}`;
+            
+            return `
+                <div class="carousel-video-item">
+                    <div class="carousel-video-thumbnail" id="${uniqueId}" onclick="selectVideo(this, '${videoUrl}', '${safeTitle}', '${checkboxId}')">
+                        <img src="${thumbnailUrl}" alt="${videoTitle}" 
+                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDMyMCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMjAiIGhlaWdodD0iMTgwIiBmaWxsPSIjMzMzIi8+Cjx0ZXh0IHg9IjE2MCIgeT0iOTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIiBmaWxsPSIjZmZjMTA3IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiI+JHt2aWRlb1RpdGxlfTwvdGV4dD4KPC9zdmc+'" />
+                        <button class="carousel-play-btn" onclick="playSelectedVideo(event)">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="carousel-video-info">
+                        <div class="carousel-video-checkbox">
+                            <input type="checkbox" id="${checkboxId}" onchange="saveWatchedStatus('${checkboxId}', this.checked)">
+                            <span class="watched-label">Visto</span>
+                        </div>
+                        <div class="carousel-video-details">
+                            <h4>${videoTitle}</h4>
+                            <p class="video-duration">Duración: ${videoDuration}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadModuleCarousel(moduleId, videos) {
+            const track = document.getElementById(moduleId + 'Track');
+            if (!track) return;
+            
+            // Generar HTML para todos los videos
+            const videosHTML = videos.map((video, index) => createCarouselVideoItem(video, index, moduleId)).join('');
+            track.innerHTML = videosHTML;
+            
+            // Inicializar estado del carrusel
+            setTimeout(() => {
+                calculateMaxScroll(moduleId);
+                updateCarouselButtons(moduleId);
+                initializeFluidTouch(moduleId);
+                
+                // Cargar estados de checkbox
+                videos.forEach((video, index) => {
+                    const videoId = getYouTubeVideoId(video);
+                    const checkboxId = `video_${moduleId}_${videoId}`;
+                    const checkbox = document.getElementById(checkboxId);
+                    if (checkbox) {
+                        checkbox.checked = getWatchedStatus(checkboxId);
+                    }
+                });
+            }, 100);
+        }
+
+        function calculateMaxScroll(moduleId) {
+            const track = document.getElementById(moduleId + 'Track');
+            const carousel = document.getElementById(moduleId + 'Carousel');
+            if (!track || !carousel) return;
+            
+            const trackWidth = track.scrollWidth;
+            const carouselWidth = carousel.clientWidth - 40; // Restando padding
+            carouselState[moduleId].maxScroll = Math.max(0, trackWidth - carouselWidth);
+            carouselState[moduleId].currentPosition = 0;
+            carouselState[moduleId].isAtStart = true;
+            carouselState[moduleId].isAtEnd = carouselState[moduleId].maxScroll === 0;
+        }
+
+        function updateCarouselPosition(moduleId, position) {
+            const track = document.getElementById(moduleId + 'Track');
+            const state = carouselState[moduleId];
+            if (!track || !state) return;
+            
+            // Limitar la posición dentro de los rangos válidos
+            position = Math.max(0, Math.min(position, state.maxScroll));
+            
+            // Actualizar estado
+            state.currentPosition = position;
+            state.isAtStart = position === 0;
+            state.isAtEnd = position >= state.maxScroll;
+            
+            // Aplicar transformación solo si no está siendo arrastrado manualmente
+            if (!track.classList.contains('dragging')) {
+                track.style.transform = `translateX(-${position}px)`;
+            }
+            
+            // Actualizar botones
+            updateCarouselButtons(moduleId);
+        }
+
+        function navigateCarousel(moduleId, direction) {
+            const state = carouselState[moduleId];
+            if (!state) return;
+            
+            const scrollAmount = 320; // Ancho de un video + gap
+            let newPosition = state.currentPosition + (direction * scrollAmount);
+            
+            // Aplicar límites suaves
+            newPosition = Math.max(0, Math.min(newPosition, state.maxScroll));
+            
+            // Usar una animación suave solo para los botones
+            const track = document.getElementById(moduleId + 'Track');
+            if (track) {
+                track.style.transition = 'transform 0.3s ease-out';
+                updateCarouselPosition(moduleId, newPosition);
+                
+                // Remover la transición después de la animación
+                setTimeout(() => {
+                    track.style.transition = '';
+                }, 300);
+            }
+        }
+
+        function updateCarouselButtons(moduleId) {
+            const state = carouselState[moduleId];
+            if (!state) return;
+            
+            const prevBtn = document.getElementById(moduleId + 'PrevBtn');
+            const nextBtn = document.getElementById(moduleId + 'NextBtn');
+            
+            if (prevBtn) {
+                prevBtn.disabled = state.isAtStart;
+            }
+            
+            if (nextBtn) {
+                nextBtn.disabled = state.isAtEnd;
+            }
+        }
+
+        // ====================================== //
+        //         SOPORTE TOUCH/SWIPE FLUIDO     //
+        // ====================================== //
+
+        function initializeFluidTouch(moduleId) {
+            const track = document.getElementById(moduleId + 'Track');
+            const state = carouselState[moduleId];
+            if (!track || !state) return;
+
+            let startX = 0;
+            let startY = 0;
+            let currentX = 0;
+            let isDragging = false;
+            let startPosition = 0;
+            let hasMovedSignificantly = false;
+            const DRAG_THRESHOLD = 15; // Píxeles necesarios para considerar un drag
+
+            // Touch events
+            track.addEventListener('touchstart', handleStart, { passive: true });
+            track.addEventListener('touchmove', handleMove, { passive: false });
+            track.addEventListener('touchend', handleEnd, { passive: true });
+
+            // Mouse events
+            track.addEventListener('mousedown', handleStart);
+            track.addEventListener('mousemove', handleMove);
+            track.addEventListener('mouseup', handleEnd);
+            track.addEventListener('mouseleave', handleEnd);
+
+            function handleStart(e) {
+                const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+                const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+                
+                startX = clientX;
+                startY = clientY;
+                startPosition = state.currentPosition;
+                isDragging = false;
+                hasMovedSignificantly = false;
+                
+                track.style.cursor = 'grab';
+            }
+
+            function handleMove(e) {
+                if (!startX) return;
+                
+                const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+                const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+                
+                const deltaX = startX - clientX;
+                const deltaY = startY - clientY;
+                
+                // Solo iniciar drag si se mueve más del threshold y más horizontal que vertical
+                if (!isDragging && Math.abs(deltaX) > DRAG_THRESHOLD && Math.abs(deltaX) > Math.abs(deltaY)) {
+                    isDragging = true;
+                    hasMovedSignificantly = true;
+                    track.style.cursor = 'grabbing';
+                    track.classList.add('dragging');
+                }
+                
+                // Solo procesar drag si estamos en modo drag
+                if (isDragging) {
+                    e.preventDefault();
+                    
+                    let newPosition = startPosition + deltaX;
+                    
+                    // Solo aplicar límites en los extremos
+                    newPosition = Math.max(0, Math.min(newPosition, state.maxScroll));
+                    
+                    // Actualizar posición inmediatamente
+                    track.style.transform = `translateX(-${newPosition}px)`;
+                    state.currentPosition = newPosition;
+                    state.isAtStart = newPosition === 0;
+                    state.isAtEnd = newPosition >= state.maxScroll;
+                }
+            }
+
+            function handleEnd(e) {
+                track.classList.remove('dragging');
+                track.style.cursor = 'grab';
+                
+                // Solo actualizar botones si hubo drag
+                if (isDragging) {
+                    updateCarouselButtons(moduleId);
+                }
+                
+                // Reset variables
+                startX = 0;
+                startY = 0;
+                isDragging = false;
+                hasMovedSignificantly = false;
+            }
+
+            // Prevenir el comportamiento por defecto de arrastrar imágenes
+            track.addEventListener('dragstart', e => e.preventDefault());
+        }
+
+        // ====================================== //
+        //       GESTIÓN DE ESTADO DE VIDEOS      //
+        // ====================================== //
+
+        function saveWatchedStatus(videoId, watched) {
+            try {
+                const watchedVideos = JSON.parse(localStorage.getItem('powerbi_watched_videos') || '{}');
+                watchedVideos[videoId] = watched;
+                localStorage.setItem('powerbi_watched_videos', JSON.stringify(watchedVideos));
+            } catch (error) {
+                console.warn('No se pudo guardar el estado del video:', error);
+            }
+        }
+
+        function getWatchedStatus(videoId) {
+            try {
+                const watchedVideos = JSON.parse(localStorage.getItem('powerbi_watched_videos') || '{}');
+                return watchedVideos[videoId] || false;
+            } catch (error) {
+                console.warn('No se pudo cargar el estado del video:', error);
+                return false;
+            }
+        }
+
+        // ====================================== //
+        //           FUNCIONES DE ESTADÍSTICAS    //
+        // ====================================== //
+
+        function loadStatistics() {
+            calculateOverallStats();
+            loadModuleStats();
+        }
+
+        function calculateOverallStats() {
+            let totalVideos = 0;
+            let watchedVideos = 0;
+            let totalTime = calculateTotalCourseTime();
+
+            // Contar videos del curso inicial
+            const initialVideoIds = ['video1', 'video2', 'video3'];
+            totalVideos += initialVideoIds.length;
+            initialVideoIds.forEach(id => {
+                if (getWatchedStatus(id)) watchedVideos++;
+            });
+
+            // Contar videos de todos los módulos
+            Object.keys(videosData).forEach(moduleId => {
+                const videos = videosData[moduleId];
+                totalVideos += videos.length;
+                
+                videos.forEach(video => {
+                    const videoId = getYouTubeVideoId(video);
+                    const checkboxId = `video_${moduleId}_${videoId}`;
+                    if (getWatchedStatus(checkboxId)) watchedVideos++;
+                });
+            });
+
+            const pendingVideos = totalVideos - watchedVideos;
+            const percentage = totalVideos > 0 ? Math.round((watchedVideos / totalVideos) * 100) : 0;
+
+            // Actualizar la interfaz
+            document.getElementById('totalVideosCount').textContent = totalVideos;
+            document.getElementById('watchedVideosCount').textContent = watchedVideos;
+            document.getElementById('pendingVideosCount').textContent = pendingVideos;
+            document.getElementById('overallPercentage').textContent = percentage + '%';
+            document.getElementById('overallProgressBar').style.width = percentage + '%';
+            document.getElementById('totalTimeDisplay').textContent = formatMinutesToTime(totalTime);
+        }
+
+        function loadModuleStats() {
+            const moduleStatsGrid = document.getElementById('moduleStatsGrid');
+            let statsHTML = '';
+
+            // Módulos del curso
+            const modules = [
+                { id: 'inicial', name: 'Curso Inicial', icon: 'fas fa-rocket', videoIds: ['video1', 'video2', 'video3'] },
+                { id: 'modulo1', name: 'Dashboard - Reporte N° 01', icon: 'fas fa-chart-bar', videos: videosData.modulo1 },
+                { id: 'modulo2', name: 'Dashboard - Reporte N° 02', icon: 'fas fa-chart-line', videos: videosData.modulo2 },
+                { id: 'modulo3', name: 'Funciones DAX', icon: 'fas fa-calculator', videos: videosData.modulo3 },
+                { id: 'modulo4', name: 'Dashboard - Reporte N° 04', icon: 'fas fa-chart-pie', videos: videosData.modulo4 },
+                { id: 'modulo5', name: 'Dashboard - Reporte N° 05', icon: 'fas fa-chart-area', videos: videosData.modulo5 },
+                { id: 'intermedioModulo1', name: 'Power Query', icon: 'fas fa-database', videos: videosData.intermedioModulo1 },
+                { id: 'intermedioModulo2', name: 'Buenas Prácticas', icon: 'fas fa-star', videos: videosData.intermedioModulo2 },
+                { id: 'intermedioModulo3', name: 'Funciones DAX II', icon: 'fas fa-code', videos: videosData.intermedioModulo3 },
+                { id: 'intermedioModulo4', name: 'Tabla de Calendario', icon: 'fas fa-calendar', videos: videosData.intermedioModulo4 }
+            ];
+
+            modules.forEach(module => {
+                let totalVideos, watchedVideos, moduleTime;
+
+                if (module.videoIds) {
+                    // Módulo inicial
+                    totalVideos = module.videoIds.length;
+                    watchedVideos = module.videoIds.filter(id => getWatchedStatus(id)).length;
+                    moduleTime = calculateModuleTime(module.id, module.videoIds);
+                } else {
+                    // Otros módulos
+                    totalVideos = module.videos ? module.videos.length : 0;
+                    watchedVideos = 0;
+                    moduleTime = calculateModuleTime(module.id);
+                    
+                    if (module.videos) {
+                        module.videos.forEach(video => {
+                            const videoId = getYouTubeVideoId(video);
+                            const checkboxId = `video_${module.id}_${videoId}`;
+                            if (getWatchedStatus(checkboxId)) watchedVideos++;
+                        });
+                    }
+                }
+
+                const pendingVideos = totalVideos - watchedVideos;
+                const percentage = totalVideos > 0 ? Math.round((watchedVideos / totalVideos) * 100) : 0;
+                
+                // Formatear tiempo según el módulo
+                let timeDisplay;
+                if (module.id === 'inicial') {
+                    const hours = Math.floor(moduleTime / 60);
+                    const minutes = Math.floor(moduleTime % 60);
+                    timeDisplay = `${Math.floor(moduleTime)} minutos (${hours}h ${minutes}m)`;
+                } else {
+                    timeDisplay = formatMinutesToTime(moduleTime);
+                }
+
+                statsHTML += `
+                    <div class="module-stats-card">
+                        <div class="module-stats-header">
+                            <i class="${module.icon}" style="color: #ffc107; font-size: 1.5rem;"></i>
+                            <div class="module-stats-title">${module.name}</div>
+                        </div>
+                        <div class="module-stats-content">
+                            <div class="module-stat-item">
+                                <div class="module-stat-number">${totalVideos}</div>
+                                <div class="module-stat-label">Total</div>
+                            </div>
+                            <div class="module-stat-item">
+                                <div class="module-stat-number">${watchedVideos}</div>
+                                <div class="module-stat-label">Vistos</div>
+                            </div>
+                            <div class="module-stat-item">
+                                <div class="module-stat-number">${pendingVideos}</div>
+                                <div class="module-stat-label">Pendientes</div>
+                            </div>
+                        </div>
+                        <div class="module-progress">
+                            <div class="module-progress-text">
+                                <span>Progreso</span>
+                                <span class="module-progress-percentage">${percentage}%</span>
+                            </div>
+                            <div class="stats-progress-bar">
+                                <div class="stats-progress-fill" style="width: ${percentage}%"></div>
+                            </div>
+                        </div>
+                        <div class="module-time-info">
+                            <div class="module-time-total">Duración Total</div>
+                            <div class="module-time-detail">${timeDisplay}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            moduleStatsGrid.innerHTML = statsHTML;
+        }
+
+        // ====================================== //
+        //       GESTIÓN DE FUNCIONES ESPECÍFICAS //
+        // ====================================== //
+
+      function loadFunctionVideos() {
+    try {
+        const savedVideos = JSON.parse(localStorage.getItem('powerbi_function_videos') || '[]');
+        const container = document.getElementById('functionsContainer');
+        const generateBtn = document.querySelector('.generate-html-btn');
+        
+        // Obtener videos estáticos existentes (si los hay)
+        const existingStaticVideos = container.innerHTML.includes('function-video-item') 
+            ? container.innerHTML.replace('<!-- Los videos se cargarán aquí dinámicamente -->', '').trim()
+            : '';
+        
+        if (savedVideos.length === 0) {
+            // Si no hay videos dinámicos pero hay estáticos, mantenerlos
+            if (existingStaticVideos) {
+                container.innerHTML = existingStaticVideos + '\n                <!-- Los videos se cargarán aquí dinámicamente -->';
+            } else {
+                container.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 50px; color: #e0e0e0;">
+                        <i class="fas fa-video" style="font-size: 3rem; color: #ffc107; margin-bottom: 20px;"></i>
+                        <h3 style="color: #ffc107; margin-bottom: 15px;">No hay videos agregados</h3>
+                        <p>Usa el botón "+" para agregar tu primer video tutorial específico.</p>
+                    </div>
+                `;
+            }
+            // Ocultar botón de generar HTML
+            if (generateBtn) {
+                generateBtn.style.display = 'none';
+            }
+            return;
+        }
+        
+        // Generar HTML para videos dinámicos
+        const videosHTML = savedVideos.map(video => createFunctionVideoItem(video)).join('');
+        
+        // Combinar videos estáticos + dinámicos
+        container.innerHTML = existingStaticVideos + '\n' + videosHTML + '\n                <!-- Los videos se cargarán aquí dinámicamente -->';
+        
+        // Mostrar botón de generar HTML
+        if (generateBtn) {
+            generateBtn.style.display = 'block';
+        }
+    } catch (error) {
+        console.warn('No se pudieron cargar los videos de funciones:', error);
+    }
+}
+
+       function createFunctionVideoItem(video) {
+    const videoId = getYouTubeVideoId(video.url);
+    const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+    
+    return `
+        <div class="function-video-item">
+            <div class="function-video-thumbnail" onclick="openVideo('${video.url}')">
+                <img src="${thumbnailUrl}" alt="${video.title}" 
+                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDM1MCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzNTAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMzMzIi8+Cjx0ZXh0IHg9IjE3NSIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSIgZmlsbD0iI2ZmYzEwNyIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiPfCfjoUgJHt2aWRlby50aXRsZX08L3RleHQ+Cjwvc3ZnPg=='" />
+                <button class="function-play-btn">
+                    <i class="fas fa-play"></i>
+                </button>
+            </div>
+            <div class="function-video-info">
+                <h3>${video.title}</h3>
+                <p>${video.description}</p>
+            </div>
+        </div>
+    `;
+}
+
+        // ====================================== //
+        //         FUNCIÓN ELIMINAR VIDEO         //
+        // ====================================== //
+
+        function deleteFunctionVideo(videoUrl) {
+            if (confirm('¿Estás seguro de que quieres eliminar este video?')) {
+                try {
+                    const savedVideos = JSON.parse(localStorage.getItem('powerbi_function_videos') || '[]');
+                    const updatedVideos = savedVideos.filter(video => video.url !== videoUrl);
+                    localStorage.setItem('powerbi_function_videos', JSON.stringify(updatedVideos));
+                    
+                    loadFunctionVideos();
+                    alert('Video eliminado exitosamente!');
+                } catch (error) {
+                    console.error('Error al eliminar el video:', error);
+                    alert('Hubo un error al eliminar el video. Inténtalo de nuevo.');
+                }
+            }
+        }
+
+        // ====================================== //
+        //            MODAL DE AGREGAR VIDEO       //
+        // ====================================== //
+
+        function openAddVideoModal() {
+            document.getElementById('addVideoModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAddVideoModal() {
+            document.getElementById('addVideoModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('addVideoForm').reset();
+        }
+
+        // Cerrar modal con ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (document.getElementById('videoModal').style.display === 'block') {
+                    closeVideoModal();
+                } else if (document.getElementById('addVideoModal').style.display === 'block') {
+                    closeAddVideoModal();
+                } else {
+                    showMainPage('homePage');
+                }
+            }
+        });
+
+        // Cerrar modal de video clickeando fuera
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVideoModal();
+            }
+        });
+
+        // Cerrar modal clickeando fuera
+        document.getElementById('addVideoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAddVideoModal();
+            }
+        });
+
+        // Manejar envío del formulario
+        document.getElementById('addVideoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('videoTitle').value.trim();
+            const description = document.getElementById('videoDescription').value.trim();
+            const url = document.getElementById('videoUrl').value.trim();
+            
+            if (!title || !description || !url) {
+                alert('Por favor, completa todos los campos.');
+                return;
+            }
+            
+            // Validar URL de YouTube
+            if (!getYouTubeVideoId(url)) {
+                alert('Por favor, ingresa una URL válida de YouTube.');
+                return;
+            }
+            
+            try {
+                const savedVideos = JSON.parse(localStorage.getItem('powerbi_function_videos') || '[]');
+                savedVideos.push({ title, description, url });
+                localStorage.setItem('powerbi_function_videos', JSON.stringify(savedVideos));
+                
+                loadFunctionVideos();
+                closeAddVideoModal();
+                
+                alert('Video agregado exitosamente!');
+            } catch (error) {
+                console.error('Error al guardar el video:', error);
+                alert('Hubo un error al guardar el video. Inténtalo de nuevo.');
+            }
+        });
+
+        // ====================================== //
+        //            NAVEGACIÓN PRINCIPAL        //
+        // ====================================== //
+        
+        function showMainPage(pageId) {
+            // Ocultar todas las páginas
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Mostrar la página seleccionada
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            // Actualizar navegación principal
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => btn.classList.remove('active'));
+            
+            // Mostrar/ocultar sub-navegación
+            const subNav = document.getElementById('courseSubNav');
+            if (pageId === 'coursePage') {
+                subNav.classList.add('show');
+                document.getElementById('courseNavBtn').classList.add('active');
+                showCoursePage('inicial');
+            } else if (pageId === 'functionsPage') {
+                subNav.classList.remove('show');
+                loadFunctionVideos();
+            } else if (pageId === 'statisticsPage') {
+                subNav.classList.remove('show');
+                loadStatistics();
+            } else {
+                subNav.classList.remove('show');
+            }
+            
+            // Scroll al top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showCoursePage(courseType) {
+            // Ocultar todas las secciones de curso
+            const courseSections = document.querySelectorAll('.course-section');
+            courseSections.forEach(section => section.style.display = 'none');
+            
+            // Actualizar sub-navegación
+            const subNavBtns = document.querySelectorAll('.sub-nav-btn');
+            subNavBtns.forEach(btn => btn.classList.remove('active'));
+            
+            // Mostrar la sección correspondiente
+            switch(courseType) {
+                case 'inicial':
+                    document.getElementById('cursoInicial').style.display = 'block';
+                    document.getElementById('inicialBtn').classList.add('active');
+                    // Cargar estados de checkboxes para curso inicial
+                    setTimeout(() => {
+                        ['video1', 'video2', 'video3'].forEach(id => {
+                            const checkbox = document.getElementById(id);
+                            if (checkbox) {
+                                checkbox.checked = getWatchedStatus(id);
+                            }
+                        });
+                    }, 100);
+                    break;
+                case 'basico':
+                    document.getElementById('cursoBasico').style.display = 'block';
+                    document.getElementById('basicoBtn').classList.add('active');
+                    loadBasicModules();
+                    break;
+                case 'intermedio':
+                    document.getElementById('cursoIntermedio').style.display = 'block';
+                    document.getElementById('intermedioBtn').classList.add('active');
+                    loadIntermediateModules();
+                    break;
+            }
+            
+            // Scroll al top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function loadBasicModules() {
+            loadModuleCarousel('modulo1', videosData.modulo1);
+            loadModuleCarousel('modulo2', videosData.modulo2);
+            loadModuleCarousel('modulo3', videosData.modulo3);
+            loadModuleCarousel('modulo4', videosData.modulo4);
+            loadModuleCarousel('modulo5', videosData.modulo5);
+        }
+
+        function loadIntermediateModules() {
+            loadModuleCarousel('intermedioModulo1', videosData.intermedioModulo1);
+            loadModuleCarousel('intermedioModulo2', videosData.intermedioModulo2);
+            loadModuleCarousel('intermedioModulo3', videosData.intermedioModulo3);
+            loadModuleCarousel('intermedioModulo4', videosData.intermedioModulo4);
+        }
+
+        // ====================================== //
+        //             INICIALIZACIÓN             //
+        // ====================================== //
+        
+        function adjustCarouselForScreenSize() {
+            // Recalcular el scroll máximo para todos los carruseles
+            Object.keys(carouselState).forEach(moduleId => {
+                const track = document.getElementById(moduleId + 'Track');
+                if (track && track.children.length > 0) {
+                    calculateMaxScroll(moduleId);
+                    // Ajustar posición actual si excede el nuevo máximo
+                    const state = carouselState[moduleId];
+                    if (state.currentPosition > state.maxScroll) {
+                        updateCarouselPosition(moduleId, state.maxScroll);
+                    } else {
+                        updateCarouselButtons(moduleId);
+                    }
+                }
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar comportamiento suave de scroll
+            document.documentElement.style.scrollBehavior = 'smooth';
+            
+            // Mostrar página de inicio por defecto
+            showMainPage('homePage');
+            
+            // Ajustar carrusel en el primer load
+            setTimeout(() => {
+                adjustCarouselForScreenSize();
+            }, 100);
+            
+            // Ajustar carrusel en cambio de tamaño de ventana
+            let resizeTimeout;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(function() {
+                    adjustCarouselForScreenSize();
+                }, 250);
+            });
+        });
+
+        // ====================================== //
+        //         NAVEGACIÓN CON TECLADO         //
+        // ====================================== //
+        
+        document.addEventListener('keydown', function(e) {
+            // ESC para cerrar modales o volver al inicio
+            if (e.key === 'Escape') {
+                if (document.getElementById('videoModal').style.display === 'block') {
+                    closeVideoModal();
+                } else if (document.getElementById('addVideoModal').style.display === 'block') {
+                    closeAddVideoModal();
+                } else {
+                    showMainPage('homePage');
+                }
+            }
+        });
+		
+		// ====================================== //
+//        GENERADOR DE CÓDIGO HTML        //
+// ====================================== //
+
+function generateHtmlCode() {
+    try {
+        const savedVideos = JSON.parse(localStorage.getItem('powerbi_function_videos') || '[]');
+        
+        if (savedVideos.length === 0) {
+            alert('No hay videos para generar código HTML. Agrega algunos videos primero.');
+            return;
+        }
+
+        // Generar código HTML para cada video
+        let htmlCode = '';
+        savedVideos.forEach((video, index) => {
+            const videoId = getYouTubeVideoId(video.url);
+            const safeTitle = video.title.replace(/'/g, "\\'").replace(/"/g, '\\"');
+            const safeUrl = video.url.replace(/'/g, "\\'").replace(/"/g, '\\"');
+            
+            htmlCode += `                <div class="function-video-item">
+                    <div class="function-video-thumbnail" onclick="openVideo('${video.url}')">
+                        <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" alt="${video.title}" 
+                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDM1MCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzNTAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMzMzIi8+Cjx0ZXh0IHg9IjE3NSIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSIgZmlsbD0iI2ZmYzEwNyIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiPfCfjoUgJHt2aWRlby50aXRsZX08L3RleHQ+Cjwvc3ZnPg=='" />
+                        <button class="function-play-btn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="function-video-info">
+                        <h3>${video.title}</h3>
+                        <p>${video.description}</p>
+                    </div>
+                </div>
+
+`;
+        });
+
+        // Generar archivo de instrucciones
+        const instructions = `INSTRUCCIONES PARA AGREGAR VIDEOS AL PORTAL POWER BI
+=======================================================
+Fecha: ${new Date().toLocaleString('es-ES')}
+Videos a agregar: ${savedVideos.length}
+
+PASOS A SEGUIR:
+
+1. Hacer backup del archivo HTML actual del portal
+2. Abrir el archivo HTML original en un editor de texto
+3. Buscar la sección: <div class="functions-container" id="functionsContainer">
+4. Dentro de ese div, buscar el comentario: <!-- Los videos se cargarán aquí dinámicamente -->
+5. REEMPLAZAR ese comentario por el código HTML que se encuentra más abajo
+6. Guardar el archivo
+7. Subir el archivo actualizado al servidor
+8. Probar que los nuevos videos aparezcan correctamente
+
+IMPORTANTE:
+- Hacer backup antes de modificar
+- Verificar que no se dupliquen videos existentes
+- Probar en un entorno de desarrollo primero
+
+CÓDIGO HTML A INSERTAR:
+=======================
+
+${htmlCode}
+
+VIDEOS AGREGADOS:
+=================
+${savedVideos.map((video, index) => `${index + 1}. ${video.title} - ${video.url}`).join('\n')}
+
+=======================================================
+NOTAS:
+- Este código reemplaza el contenido dinámico de localStorage
+- Los videos quedarán permanentes en el HTML
+- Se puede eliminar el localStorage después de aplicar los cambios
+- Verificar que todas las URLs de YouTube sean válidas
+=======================================================`;
+
+        // Crear y descargar archivo
+        const blob = new Blob([instructions], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `Instrucciones_Videos_PowerBI_${new Date().toISOString().slice(0, 10)}.txt`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+
+        // Preguntar si limpiar localStorage
+        const clearStorage = confirm(
+            `Archivo generado exitosamente con ${savedVideos.length} videos!\n\n` +
+            '¿Quieres limpiar la lista de videos locales?\n' +
+            '(Recomendado después de aplicar los cambios al servidor)\n\n' +
+            'SÍ = Limpiar videos locales\n' +
+            'NO = Mantener videos locales'
+        );
+
+        if (clearStorage) {
+            localStorage.removeItem('powerbi_function_videos');
+            loadFunctionVideos(); // Actualizar la vista
+            alert('Videos locales eliminados. La lista está limpia para nuevos videos.');
+        } else {
+            alert('Videos locales mantenidos. Puedes generar código nuevamente si es necesario.');
+        }
+
+    } catch (error) {
+        console.error('Error al generar código HTML:', error);
+        alert('Hubo un error al generar el código. Inténtalo de nuevo.');
+    }
+}
+		
+    </script>
+</body>
+</html>
