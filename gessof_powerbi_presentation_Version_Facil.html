@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrategia Comercial Power BI - GESSOF</title>
+    <link rel="icon" type="image/png" href="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Imagenes/New_Power_BI_Logo.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Header Fijo */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+            padding: 15px 20px;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(255, 193, 7, 0.3);
+            border-bottom: 3px solid #ffc107;
+        }
+
+        .header h1 {
+            text-align: center;
+            font-size: clamp(1.3rem, 3vw, 2rem);
+            font-weight: 700;
+            color: #ffc107;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 12px;
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 8px 16px;
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            color: #ffc107;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255, 193, 7, 0.25);
+            border-color: #ffc107;
+            transform: translateY(-2px);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 130px 30px 50px 30px;
+        }
+
+        /* Secciones */
+        .section {
+            margin: 50px 0;
+            padding: 40px;
+            background: linear-gradient(145deg, #1e1e3f, #16213e);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            scroll-margin-top: 120px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            color: #ffc107;
+            margin-bottom: 25px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .intro-text {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(255, 193, 7, 0.08);
+            border-radius: 12px;
+            border-left: 4px solid #ffc107;
+            line-height: 1.8;
+        }
+
+        .section-subtitle {
+            font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+            color: #ffc107;
+            margin: 35px 0 20px 0;
+            padding-left: 15px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #2a2a5c, #1a1a3e);
+            padding: 28px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #ffc107;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 193, 7, 0.25);
+        }
+
+        .card h3 {
+            color: #ffc107;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: #e0e0e0;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .card ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 15px;
+        }
+
+        .card ul li {
+            padding: 10px 0;
+            padding-left: 28px;
+            position: relative;
+            color: #e0e0e0;
+            line-height: 1.7;
+        }
+
+        .card ul li:before {
+            content: "✓";
+            color: #ffc107;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .stats-box {
+            background: rgba(255, 193, 7, 0.12);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 193, 7, 0.4);
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .stat-item {
+            background: linear-gradient(145deg, #2a2a5c, #1a1a3e);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2.8rem;
+            color: #ffc107;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #e0e0e0;
+            font-size: 1.05rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.15), rgba(40, 167, 69, 0.05));
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #28a745;
+            margin: 25px 0;
+        }
+
+        .highlight-box h4 {
+            color: #28a745;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .highlight-box p {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .comparison-table {
+            overflow-x: auto;
+            margin: 30px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: linear-gradient(145deg, #2a2a5c, #1a1a3e);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th {
+            background: rgba(255, 193, 7, 0.25);
+            color: #ffc107;
+            padding: 18px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        td {
+            padding: 18px;
+            border-bottom: 1px solid rgba(255, 193, 7, 0.1);
+            color: #e0e0e0;
+            font-size: 1.05rem;
+        }
+
+        tr:hover {
+            background: rgba(255, 193, 7, 0.08);
+        }
+
+        .benefit-card {
+            background: linear-gradient(145deg, #2a2a5c, #1a1a3e);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #28a745;
+            margin: 20px 0;
+        }
+
+        .benefit-card h4 {
+            color: #28a745;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .benefit-card p {
+            color: #e0e0e0;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .tier-section {
+            background: linear-gradient(145deg, #2a2a5c, #1a1a3e);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 2px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .tier-badge {
+            display: inline-block;
+            padding: 10px 25px;
+            background: rgba(255, 193, 7, 0.2);
+            border: 2px solid #ffc107;
+            border-radius: 25px;
+            color: #ffc107;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .simple-list {
+            background: rgba(255, 193, 7, 0.05);
+            padding: 20px 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .simple-list li {
+            padding: 12px 0;
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .simple-list li:before {
+            content: "→";
+            color: #ffc107;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .action-box {
+            background: rgba(23, 162, 184, 0.1);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #17a2b8;
+            margin: 25px 0;
+        }
+
+        .action-box h4 {
+            color: #17a2b8;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .cta-final {
+            text-align: center;
+            margin: 60px 0;
+            padding: 50px 40px;
+            background: linear-gradient(45deg, #1a1a3e, #2a2a5c);
+            border-radius: 20px;
+            border: 3px solid #ffc107;
+        }
+
+        .cta-final h2 {
+            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            color: #ffc107;
+            margin-bottom: 20px;
+        }
+
+        .cta-final p {
+            font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+            color: #e0e0e0;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 150px 20px 40px 20px;
+            }
+
+            .section {
+                padding: 25px 20px;
+            }
+
+            .nav-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Fijo -->
+    <header class="header">
+        <h1>Estrategia Comercial Power BI - GESSOF 2025</h1>
+        <nav class="main-nav">
+            <a href="#que-es" class="nav-btn">¿Qué es Power BI?</a>
+            <a href="#alcance" class="nav-btn">El Mercado</a>
+            <a href="#servicios" class="nav-btn">Nuestros Servicios</a>
+            <a href="#clientes" class="nav-btn">Tipos de Clientes</a>
+            <a href="#beneficios" class="nav-btn">Beneficios</a>
+            <a href="#comparacion" class="nav-btn">Excel vs Power BI</a>
+            <a href="#casos" class="nav-btn">Casos de Éxito</a>
+            <a href="#plan" class="nav-btn">Plan de Acción</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Sección 0: ¿Qué es Power BI? -->
+        <section id="que-es" class="section">
+            <h2 class="section-title">¿Qué es Power BI?</h2>
+            
+            <div class="intro-text">
+                <strong>Power BI</strong> es como un tablero de control inteligente para tu negocio. 
+                Imagina que puedes ver toda la información importante de tu empresa (ventas, gastos, inventario, clientes) 
+                en una sola pantalla, actualizada en tiempo real, desde tu celular o computadora.
+            </div>
+
+            <div class="content-grid">
+                <div class="card">
+                    <h3>En Palabras Simples</h3>
+                    <p>Es una herramienta que transforma montañas de datos aburridos (hojas de Excel interminables) 
+                    en gráficos bonitos y fáciles de entender que te ayudan a tomar mejores decisiones.</p>
+                </div>
+
+                <div class="card">
+                    <h3>¿Qué hace?</h3>
+                    <ul>
+                        <li>Conecta todos tus sistemas (ventas, contabilidad, inventario)</li>
+                        <li>Actualiza la información automáticamente</li>
+                        <li>Crea gráficos y reportes profesionales</li>
+                        <li>Te muestra qué está pasando en tu negocio AHORA</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>¿Por qué es importante?</h3>
+                    <p>Porque en lugar de esperar 15 días para saber cómo le fue a tu negocio el mes pasado, 
+                    puedes verlo hoy mismo. Y tomar decisiones rápidas antes que tu competencia.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 1: Alcance del Mercado -->
+        <section id="alcance" class="section">
+            <h2 class="section-title">El Mercado de Power BI</h2>
+
+            <div class="intro-text">
+                Power BI no es una herramienta nueva o experimental. Es la líder mundial en su categoría, 
+                respaldada por Microsoft, y utilizada por miles de empresas en todo el mundo.
+            </div>
+
+            <div class="stats-box">
+                <h3 style="color: #ffc107; font-size: 1.8rem; margin-bottom: 25px;">Números del Mercado</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">30M+</div>
+                        <div class="stat-label">Personas lo usan cada mes</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100K+</div>
+                        <div class="stat-label">Empresas en el mundo</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">$50B</div>
+                        <div class="stat-label">Valor del mercado para 2032</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">#1</div>
+                        <div class="stat-label">Herramienta más recomendada</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle">¿Qué puede hacer Power BI?</h3>
+            <div class="content-grid">
+                <div class="card">
+                    <h3>Se conecta a TODO</h3>
+                    <p>Más de 200 conexiones disponibles: Excel, bases de datos, sistemas de ventas, 
+                    contabilidad, redes sociales, Google, y prácticamente cualquier sistema que uses.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Inteligencia Artificial</h3>
+                    <p>Tiene asistentes inteligentes que te ayudan. Puedes preguntarle cosas en lenguaje normal 
+                    como "¿cuál fue mi mejor mes?" y te responde con gráficos.</p>
+                </div>
+
+                <div class="card">
+                    <h3>En Tiempo Real</h3>
+                    <p>No esperas al fin del mes. Ves lo que está pasando AHORA en tu negocio. 
+                    Como el velocímetro de un auto mientras manejas.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Desde el Celular</h3>
+                    <p>Aplicación para iPhone y Android. Revisa tus números desde cualquier lugar, 
+                    como si revisaras tus mensajes de WhatsApp.</p>
+                </div>
+
+                <div class="card">
+                    <h3>En la Nube o Local</h3>
+                    <p>Si no quieres tus datos en internet, podemos instalarlo en tus propios servidores. 
+                    Tú decides dónde viven tus datos.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Predicciones</h3>
+                    <p>No solo te dice qué pasó, te ayuda a predecir qué va a pasar. 
+                    Como un pronóstico del tiempo, pero para tu negocio.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>En Chile</h4>
+                <p>El mercado chileno vale más de 50 millones de dólares al año y está creciendo 30% anualmente. 
+                Las empresas están buscando desesperadamente esto, y hay pocos que lo hagan bien. 
+                Es el momento perfecto para entrar.</p>
+            </div>
+        </section>
+
+        <!-- Sección 2: Servicios GESSOF -->
+        <section id="servicios" class="section">
+            <h2 class="section-title">¿Qué Ofrece GESSOF?</h2>
+
+            <div class="intro-text">
+                No solo "instalamos Power BI". Ofrecemos una solución completa: desde entender qué necesitas, 
+                hasta capacitar a tu equipo y darte soporte continuo.
+            </div>
+
+            <h3 class="section-subtitle">Instalación y Configuración Inicial</h3>
+            <div class="content-grid">
+                <div class="card">
+                    <h3>Instalación Completa</h3>
+                    <p>Instalamos Power BI en todas las computadoras que necesites, configurado con los colores 
+                    y logo de tu empresa, listo para usar desde el primer día.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Migración desde Excel</h3>
+                    <p>Si hoy trabajas con Excel, migramos toda tu información y reportes a Power BI. 
+                    No pierdes nada, solo ganas velocidad y automatización.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Seguridad desde el Inicio</h3>
+                    <p>Configuramos quién puede ver qué información. No todos ven todo. Cada usuario ve solo lo que le corresponde.</p>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle">Desarrollo de Dashboards (Tableros)</h3>
+            <div class="content-grid">
+                <div class="card">
+                    <h3>Para Gerencia</h3>
+                    <p>Tableros ejecutivos: 5 a 10 números clave que el dueño o gerente necesita ver. 
+                    Simple, claro, directo. Se revisa en 30 segundos.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Para Gerentes de Área</h3>
+                    <p>Reportes más detallados con capacidad de "profundizar". El gerente de ventas puede ver ventas generales, 
+                    y hacer clic para ver vendedor por vendedor.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Financieros</h3>
+                    <p>Para el contador o CFO: cierres mensuales, flujo de caja, presupuesto versus real. 
+                    Lo que antes tomaba 15 días, ahora toma 2 horas.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Operaciones</h3>
+                    <p>Control de inventarios, análisis de proveedores, eficiencia de rutas de transporte. 
+                    Para el que maneja el día a día del negocio.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Recursos Humanos</h3>
+                    <p>Análisis de desempeño, rotación de personal, predicción de quién podría renunciar. 
+                    RR.HH. basado en datos, no en intuición.</p>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle">Servicios Avanzados</h3>
+            <div class="benefit-card">
+                <h4>Capacitación de tu Equipo</h4>
+                <p>No solo dejamos la herramienta instalada. Capacitamos a tu gente para que sepan usarla, 
+                modificarla, y sacarle el máximo provecho sin depender siempre de nosotros.</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>Soporte Continuo</h4>
+                <p>Cuando algo falla, cuando necesitas un nuevo reporte, cuando tienes una duda. 
+                Estamos disponibles por teléfono, email o WhatsApp.</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>Inteligencia Artificial</h4>
+                <p>Para empresas que quieren más: predicciones de ventas, detección automática de problemas, 
+                recomendaciones inteligentes. La tecnología más avanzada aplicada a tu negocio.</p>
+            </div>
+        </section>
+
+        <!-- Sección 3: Tipos de Clientes -->
+        <section id="clientes" class="section">
+            <h2 class="section-title">¿Para Quién es Esto?</h2>
+
+            <div class="intro-text">
+                Power BI sirve para empresas de todos los tamaños. Desde una tienda con 3 sucursales 
+                hasta un banco con miles de empleados. Lo importante es tener datos que necesites entender mejor.
+            </div>
+
+            <div class="tier-section">
+                <div class="tier-badge">EMPRESAS PEQUEÑAS Y MEDIANAS</div>
+                <h3 style="color: #ffc107; font-size: 1.8rem; margin: 20px 0;">El Inicio Perfecto</h3>
+                
+                <p style="color: #e0e0e0; font-size: 1.15rem; margin-bottom: 25px;">
+                    Empresas de 5 a 200 empleados. Aquí empezamos porque las decisiones son rápidas 
+                    y los resultados se ven inmediatamente.
+                </p>
+
+                <div class="content-grid">
+                    <div class="card">
+                        <h3>Retail y Comercio</h3>
+                        <p>Tiendas con varias sucursales que necesitan saber: ¿Qué se vende? ¿Dónde? 
+                        ¿Cuánto inventario tengo? ¿Qué local es más rentable?</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Distribuidoras</h3>
+                        <p>Empresas que reparten productos. Necesitan controlar rutas de camiones, 
+                        eficiencia en entregas, análisis de clientes.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Servicios Profesionales</h3>
+                        <p>Estudios de abogados, consultoras, agencias. Necesitan control de proyectos, 
+                        facturación por cliente, horas trabajadas versus cobradas.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Clínicas y Centros Médicos</h3>
+                        <p>Control de atenciones, ocupación de consultas, facturación por prestación. 
+                        ¿Qué días hay más demanda? ¿Qué doctores son más eficientes?</p>
+                    </div>
+                </div>
+
+                <div class="simple-list">
+                    <h4 style="color: #ffc107; margin-bottom: 15px;">¿Por qué empezar aquí?</h4>
+                    <ul>
+                        <li>Decisiones rápidas - hablas directo con el dueño</li>
+                        <li>Problemas similares - podemos reutilizar soluciones</li>
+                        <li>Inversión accesible - no se necesitan millones</li>
+                        <li>Referencias efectivas - un cliente feliz trae más clientes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tier-section">
+                <div class="tier-badge" style="background: rgba(23, 162, 184, 0.2); border-color: #17a2b8; color: #17a2b8;">EMPRESAS MEDIANAS A GRANDES</div>
+                <h3 style="color: #17a2b8; font-size: 1.8rem; margin: 20px 0;">El Siguiente Nivel</h3>
+                
+                <p style="color: #e0e0e0; font-size: 1.15rem; margin-bottom: 25px;">
+                    Empresas de 200 a 1000 empleados. Proyectos más complejos, más datos, más sistemas conectados.
+                </p>
+
+                <div class="content-grid">
+                    <div class="card">
+                        <h3>Manufactura</h3>
+                        <p>Fábricas que necesitan controlar producción, calidad, eficiencia de máquinas, cadena de suministro.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Agroindustria</h3>
+                        <p>Control de cosechas, trazabilidad de productos, análisis de rendimientos, control de exportaciones.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Construcción</h3>
+                        <p>Control de múltiples obras, costos por proyecto, avance versus presupuesto, gestión de subcontratistas.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Logística</h3>
+                        <p>Flotas de camiones grandes, optimización de rutas, control de combustible, mantenimiento preventivo.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tier-section">
+                <div class="tier-badge" style="background: rgba(106, 90, 205, 0.2); border-color: #6a5acd; color: #6a5acd;">GRANDES CORPORACIONES</div>
+                <h3 style="color: #6a5acd; font-size: 1.8rem; margin: 20px 0;">El Objetivo a Largo Plazo</h3>
+                
+                <p style="color: #e0e0e0; font-size: 1.15rem; margin-bottom: 25px;">
+                    Empresas de más de 1000 empleados. Bancos, telecomunicaciones, energía, gobierno. 
+                    Proyectos de meses, altamente complejos.
+                </p>
+
+                <div class="simple-list">
+                    <ul>
+                        <li>Bancos y aseguradoras - Reportes regulatorios, gestión de riesgos</li>
+                        <li>Telecomunicaciones - Análisis de clientes que se van, rendimiento de red</li>
+                        <li>Empresas de energía - Predicción de demanda, control de consumos</li>
+                        <li>Gobierno - Transparencia, gestión pública eficiente</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 4: Beneficios -->
+        <section id="beneficios" class="section">
+            <h2 class="section-title">¿Cuánto se Ahorra o Gana?</h2>
+
+            <div class="intro-text">
+                Esto no es un gasto, es una inversión que se paga sola. Hay estudios serios que lo comprueban.
+            </div>
+
+            <div class="stats-box">
+                <h3 style="color: #ffc107; font-size: 1.8rem; margin-bottom: 25px;">Retorno de Inversión Comprobado</h3>
+                <p style="color: #e0e0e0; font-size: 1.15rem; margin-bottom: 25px;">
+                    Estos números vienen de Forrester, una de las consultoras más respetadas del mundo:
+                </p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">271%</div>
+                        <div class="stat-label">Retorno en 3 años</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">27%</div>
+                        <div class="stat-label">Más rápido que otras opciones</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">25%</div>
+                        <div class="stat-label">Reducción de costos</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">6 meses</div>
+                        <div class="stat-label">Para recuperar la inversión</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle">Beneficios Reales y Medibles</h3>
+
+            <div class="benefit-card">
+                <h4>Ahorro de Tiempo Masivo</h4>
+                <p>Lo que hoy toma días o semanas (armar reportes en Excel), pasa a tomar minutos. 
+                Tu equipo de administración puede enfocarse en analizar y tomar decisiones, 
+                no en copiar y pegar números entre hojas de cálculo.</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>Menos Errores, Más Confianza</h4>
+                <p>Los errores en Excel son comunes: una fórmula mal escrita, una celda no actualizada. 
+                Con Power BI, todo se actualiza automáticamente desde la fuente original. 
+                80% menos errores documentados.</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>Decisiones Más Rápidas</h4>
+                <p>No esperas al día 15 del mes para saber cómo te fue. Lo ves hoy. Ahora. 
+                Puedes reaccionar antes que tu competencia. Ese tiempo vale oro.</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>Tu Equipo Más Productivo</h4>
+                <p>En lugar de pasar 70% del tiempo armando reportes, tu gente puede enfocarse en analizar, 
+                encontrar oportunidades, resolver problemas. Personal más feliz y más útil.</p>
+            </div>
+
+       </section>
+
+        <!-- Sección 5: Comparación Excel vs Power BI -->
+        <section id="comparacion" class="section">
+            <h2 class="section-title">Excel vs Power BI: La Diferencia</h2>
+
+            <div class="intro-text">
+                Excel es excelente... hasta que no lo es. Cuando tu negocio crece, Excel se vuelve lento, 
+                propenso a errores, y consume demasiado tiempo. Power BI resuelve exactamente esos problemas.
+            </div>
+
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>Con Excel</th>
+                            <th>Con Power BI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Actualización</strong></td>
+                            <td>Manual, cada semana o mes</td>
+                            <td style="color: #28a745; font-weight: 600;">Automática, cada hora o día</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tiempo para ver información</strong></td>
+                            <td>Horas o días armando</td>
+                            <td style="color: #28a745; font-weight: 600;">Segundos</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Errores</strong></td>
+                            <td>Frecuentes (fórmulas rotas)</td>
+                            <td style="color: #28a745; font-weight: 600;">Mínimos (automatizado)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Trabajo en equipo</strong></td>
+                            <td>Archivos por email, confusión</td>
+                            <td style="color: #28a745; font-weight: 600;">Una versión, todos la ven</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cantidad de datos</strong></td>
+                            <td>Se traba con mucha info</td>
+                            <td style="color: #28a745; font-weight: 600;">Millones de registros sin problema</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Acceso</strong></td>
+                            <td>Solo en la oficina</td>
+                            <td style="color: #28a745; font-weight: 600;">Desde cualquier lugar</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Costo de personal</strong></td>
+                            <td>Tiempo completo en reportes</td>
+                            <td style="color: #28a745; font-weight: 600;">70% del tiempo liberado</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Mensaje Clave</h4>
+                <p>No estamos diciendo que Excel sea malo. Excel es perfecto para muchas cosas. 
+                Pero para análisis de negocio, reportes ejecutivos, y toma de decisiones con muchos datos, 
+                Power BI es como pasar de una calculadora a una computadora.</p>
+            </div>
+        </section>
+
+        <!-- Sección 6: Casos de Éxito -->
+        <section id="casos" class="section">
+            <h2 class="section-title">Casos de Éxito en Chile</h2>
+
+            <div class="intro-text">
+                Estos son ejemplos reales de empresas chilenas que implementaron Power BI. 
+                Problemas comunes, soluciones prácticas, resultados medibles.
+            </div>
+
+            <div class="benefit-card">
+                <h4>Cadena de Farmacias - 15 Locales</h4>
+                <p><strong>El Problema:</strong><br>
+                No sabían qué productos se vendían más, cuánto inventario tener en cada local, 
+                qué sucursal vendía mejor. Todo era Excel y estimaciones.</p>
+                
+                <p style="margin-top: 15px;"><strong>La Solución:</strong><br>
+                Dashboard conectado a su sistema de ventas que muestra en tiempo real: 
+                ventas por local, productos más vendidos, sugerencias automáticas de compra.</p>
+                
+                <div style="background: rgba(40, 167, 69, 0.2); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <strong style="color: #28a745; font-size: 1.3rem;">Resultados en 4 semanas:</strong><br><br>
+                    ✓ 30% menos inventario acumulado sin vender<br>
+                    ✓ 15% más ventas de productos de alta rotación<br>
+                    ✓ Decisiones de compra en minutos en vez de días
+                </div>
+            </div>
+
+            <div class="benefit-card">
+                <h4>Empresa de Transporte - 50 Camiones</h4>
+                <p><strong>El Problema:</strong><br>
+                Costos de combustible y mantenimiento fuera de control. 
+                No sabían qué chofer o ruta era más eficiente. Sorpresas constantes en gastos.</p>
+                
+                <p style="margin-top: 15px;"><strong>La Solución:</strong><br>
+                Sistema GPS conectado a Power BI que muestra: consumo por camión, 
+                eficiencia por chofer, rutas óptimas, alertas de mantenimiento preventivo.</p>
+                
+                <div style="background: rgba(40, 167, 69, 0.2); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <strong style="color: #28a745; font-size: 1.3rem;">Resultados en 6 semanas:</strong><br><br>
+                    ✓ $8,000 USD menos por mes en combustible<br>
+                    ✓ 40% menos mantenimientos de emergencia (caros)<br>
+                    ✓ Identificación de choferes que necesitaban capacitación
+                </div>
+            </div>
+
+            <div class="benefit-card">
+                <h4>Clínica Dental - 5 Sedes</h4>
+                <p><strong>El Problema:</strong><br>
+                No sabían la ocupación real de cada consultorio, rentabilidad por tipo de atención, 
+                ni por qué algunos días había consultas vacías.</p>
+                
+                <p style="margin-top: 15px;"><strong>La Solución:</strong><br>
+                Dashboard de atenciones con predicción de agenda inteligente. 
+                Muestra ocupación en tiempo real, rentabilidad por prestación, patrones de ausentismo.</p>
+                
+                <div style="background: rgba(40, 167, 69, 0.2); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <strong style="color: #28a745; font-size: 1.3rem;">Resultados en 3 semanas:</strong><br><br>
+                    ✓ 25% más ocupación al reorganizar horarios inteligentemente<br>
+                    ✓ Identificación de prestaciones más rentables<br>
+                    ✓ Reducción drástica de horas médicas desperdiciadas
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>¿Qué tienen en común estos casos?</h4>
+                <p>1. Problemas simples pero costosos<br>
+                2. Soluciones implementadas rápido (3-6 semanas)<br>
+                3. Resultados medibles en dinero<br>
+                4. Retorno de inversión en menos de 6 meses</p>
+            </div>
+        </section>
+
+        <!-- Sección 7: Plan de Acción -->
+        <section id="plan" class="section">
+            <h2 class="section-title">¿Cómo Empezamos?</h2>
+
+            <div class="intro-text">
+                No se trata de hacer todo al mismo tiempo. Vamos paso a paso, con objetivos claros 
+                y resultados medibles en cada etapa.
+            </div>
+
+            <h3 class="section-subtitle">Fase 1: Preparación (Primeros 2 Meses)</h3>
+            
+            <div class="action-box">
+                <h4>Certificación del Equipo</h4>
+                <p>Nuestro equipo se certifica oficialmente con Microsoft en Power BI. 
+                Esto nos da credibilidad, acceso a soporte técnico directo, y nos convierte en partner oficial.</p>
+            </div>
+
+            <div class="action-box">
+                <h4>Crear Soluciones Ejemplo</h4>
+                <p>Desarrollar 5-7 dashboards de demostración por industria:<br><br>
+                • Uno para retail (ventas e inventario)<br>
+                • Uno para transporte (control de flota)<br>
+                • Uno para salud (atenciones y ocupación)<br>
+                • Uno para manufactura (producción y calidad)<br>
+                • Uno para servicios (proyectos y facturación)</p>
+            </div>
+
+            <div class="action-box">
+                <h4>Metodología Propia</h4>
+                <p>Crear nuestro propio método de trabajo: cómo analizamos las necesidades del cliente, 
+                cómo implementamos, cómo capacitamos, cómo damos soporte. Todo documentado y replicable.</p>
+            </div>
+
+            <h3 class="section-subtitle">Fase 2: Marketing (Meses 2-3)</h3>
+
+            <div class="content-grid">
+                <div class="card">
+                    <h3>LinkedIn Profesional</h3>
+                    <p>Publicar casos de éxito cada semana, tips prácticos de BI, 
+                    "antes y después" de implementaciones. Invertir $500 mensuales en publicidad dirigida.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Alianzas Estratégicas</h3>
+                    <p>Asociarnos con vendedores de sistemas (ERP, software de retail, CRM). 
+                    Ellos nos refieren clientes, nosotros les pagamos comisión.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Charlas en Gremios</h3>
+                    <p>Dar charlas gratuitas en Cámara de Comercio, asociaciones de retailers, 
+                    asociación industrial. Ofrecer demostraciones en vivo.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Google Ads</h3>
+                    <p>Publicidad en Google para búsquedas específicas: 
+                    "dashboard para retail Chile", "reportes automáticos empresa". 
+                    Presupuesto bajo ($300-500/mes).</p>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle">Primeros Pasos Concretos</h3>
+
+            <div class="simple-list">
+                <h4 style="color: #ffc107; margin-bottom: 15px;">Semana 1-2:</h4>
+                <ul>
+                    <li>Definir 2 industrias objetivo (recomiendo: retail + logística)</li>
+                    <li>Desarrollar 2 demos con datos realistas</li>
+                    <li>Crear presentación de ventas de 10 diapositivas</li>
+                </ul>
+            </div>
+
+            <div class="simple-list">
+                <h4 style="color: #ffc107; margin-bottom: 15px;">Semana 3-4:</h4>
+                <ul>
+                    <li>Contactar 5 potenciales socios (contadores, vendedores ERP)</li>
+                    <li>Publicar 4 artículos en LinkedIn</li>
+                    <li>Lanzar primera campaña pequeña en Google</li>
+                </ul>
+            </div>
+
+            <div class="simple-list">
+                <h4 style="color: #ffc107; margin-bottom: 15px;">Mes 2:</h4>
+                <ul>
+                    <li>Primer webinar educativo gratis</li>
+                    <li>10 reuniones con empresas interesadas</li>
+                    <li>Cerrar primeros 2-3 clientes</li>
+                </ul>
+            </div>
+
+            <div class="simple-list">
+                <h4 style="color: #ffc107; margin-bottom: 15px;">Mes 3:</h4>
+                <ul>
+                    <li>Documentar primeros casos de éxito (con permiso del cliente)</li>
+                    <li>Ajustar precios y propuesta según feedback real</li>
+                    <li>Contratar primer consultor adicional</li>
+                </ul>
+            </div>
+
+            <h3 class="section-subtitle">Metas Medibles</h3>
+
+            <div class="stats-box">
+                <h4 style="color: #ffc107; margin-bottom: 20px;">Primeros 6 meses:</h4>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">8-12</div>
+                        <div class="stat-label">Clientes nuevos</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">$60K-100K</div>
+                        <div class="stat-label">Ingresos totales</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Casos documentados</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">Socios activos</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-box">
+                <h4 style="color: #ffc107; margin-bottom: 20px;">A 18 meses:</h4>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">30-40</div>
+                        <div class="stat-label">Clientes activos</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">$250K-400K</div>
+                        <div class="stat-label">Ingresos anuales</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">60%</div>
+                        <div class="stat-label">Ingresos recurrentes</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5-8</div>
+                        <div class="stat-label">Personas en equipo</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Final -->
+        <div class="cta-final">
+            <h2>La Oportunidad Está Aquí</h2>
+            <p style="margin: 25px auto;">
+                El mercado chileno vale más de $50 millones de dólares al año y crece 30% anualmente. 
+                Las empresas están buscando esto desesperadamente. Power BI es la herramienta líder mundial. 
+                GESSOF tiene la experiencia técnica del sector financiero más exigente.
+            </p>
+            <p style="margin: 25px auto; font-weight: 600; color: #ffc107; font-size: 1.4rem;">
+                Todo está listo. Solo falta ejecutar.
+            </p>
+            <p style="margin-top: 30px;">
+                No estamos vendiendo software. Estamos vendiendo decisiones más rápidas, 
+                menos errores, más tiempo para lo importante, y ventaja competitiva real.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navBtns = document.querySelectorAll('.nav-btn');
+            const sections = document.querySelectorAll('.section');
+
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            function updateActiveNav() {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    
+                    if (window.pageYOffset >= sectionTop - 150) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navBtns.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('href') === '#' + current) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveNav);
+            updateActiveNav();
+        });
+    </script>
+</body>
+</html>

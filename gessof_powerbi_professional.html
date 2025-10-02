@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrategia Comercial Power BI - GESSOF Professional</title>
+    <link rel="icon" type="image/png" href="https://github.com/GESSOF/PowerBI/raw/main/Repositorio_Imagenes/New_Power_BI_Logo.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+            padding: 12px 20px;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(255, 193, 7, 0.3);
+            border-bottom: 3px solid #ffc107;
+        }
+
+        .header h1 {
+            text-align: center;
+            font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+            font-weight: 700;
+            color: #ffc107;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 6px 12px;
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 6px;
+            color: #ffc107;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255, 193, 7, 0.25);
+            border-color: #ffc107;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 30px 50px 30px;
+        }
+
+        .section {
+            margin: 50px 0;
+            padding: 45px;
+            background: linear-gradient(145deg, #1e1e3f, #16213e);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            scroll-margin-top: 110px;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            color: #ffc107;
+            margin-bottom: 30px;
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 193, 7, 0.3);
+            font-weight: 600;
+        }
+
+        .section-subtitle {
+            font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+            color: #ffc107;
+            margin: 35px 0 20px 0;
+            padding-left: 15px;
+            border-left: 4px solid #ffc107;
+            font-weight: 600;
+        }
+
+        .executive-summary {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.15), rgba(255, 193, 7, 0.05));
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid #ffc107;
+            margin: 25px 0;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #2a2a5c, #1a1a3e);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #ffc107;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 193, 7, 0.25);
+        }
+
+        .card h3 {
+            color: #ffc107;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .card h4 {
+            color: #ffc107;
+            font-size: 1.1rem;
+            margin: 15px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .card p, .card ul {
+            color: #e0e0e0;
+            line-height: 1.7;
+            font-size: 0.98rem;
+        }
+
+        .card ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 12px;
+        }
+
+        .card ul li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #e0e0e0;
+        }
+
+        .card ul li:before {
+            content: "▸";
+            color: #ffc107;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .stats-container {
+            background: rgba(255, 193, 7, 0.12);
+            padding: 35px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 193, 7, 0.4);
+            margin: 30px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, #2a2a5c, #1a1a3e);
+            padding: 28px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: #ffc107;
+            box-shadow: 0 10px 25px rgba(255, 193, 7, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: #ffc107;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #e0e0e0;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .tier-container {
+            background: linear-gradient(145deg, #2a2a5c, #1a1a3e);
+            padding: 35px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 2px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .tier-badge {
+            display: inline-block;
+            padding: 10px 25px;
+            background: rgba(255, 193, 7, 0.2);
+            border: 2px solid #ffc107;
+            border-radius: 25px;
+            color: #ffc107;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .tier-title {
+            color: #ffc107;
+            font-size: 1.6rem;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+
+        .tier-description {
+            color: #e0e0e0;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .features-list {
+            background: rgba(255, 193, 7, 0.05);
+            padding: 20px 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .features-list h4 {
+            color: #ffc107;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .features-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features-list li {
+            padding: 10px 0;
+            padding-left: 28px;
+            position: relative;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .features-list li:before {
+            content: "✓";
+            color: #28a745;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .comparison-table {
+            overflow-x: auto;
+            margin: 30px 0;
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: linear-gradient(145deg, #2a2a5c, #1a1a3e);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th {
+            background: rgba(255, 193, 7, 0.25);
+            color: #ffc107;
+            padding: 18px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        td {
+            padding: 16px 18px;
+            border-bottom: 1px solid rgba(255, 193, 7, 0.1);
+            color: #e0e0e0;
+            font-size: 0.98rem;
+        }
+
+        td strong {
+            color: #ffc107;
+        }
+
+        tr:hover {
+            background: rgba(255, 193, 7, 0.08);
+        }
+
+        .case-study {
+            background: linear-gradient(145deg, #2a2a5c, #1a1a3e);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid #28a745;
+            margin: 25px 0;
+        }
+
+        .case-study h4 {
+            color: #28a745;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .case-study .problem {
+            background: rgba(220, 53, 69, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 3px solid #dc3545;
+        }
+
+        .case-study .solution {
+            background: rgba(23, 162, 184, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 3px solid #17a2b8;
+        }
+
+        .case-study .results {
+            background: rgba(40, 167, 69, 0.15);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 3px solid #28a745;
+        }
+
+        .case-study .results strong {
+            color: #28a745;
+            font-size: 1.15rem;
+        }
+
+        .value-proposition {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.15), rgba(255, 193, 7, 0.05));
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #ffc107;
+            margin: 20px 0;
+        }
+
+        .value-proposition h4 {
+            color: #ffc107;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .value-proposition p {
+            color: #e0e0e0;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        .action-timeline {
+            background: linear-gradient(145deg, #2a2a5c, #1a1a3e);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border: 2px solid rgba(23, 162, 184, 0.4);
+        }
+
+        .action-timeline h4 {
+            color: #17a2b8;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .action-item {
+            padding: 18px;
+            margin: 15px 0;
+            background: rgba(23, 162, 184, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .action-item strong {
+            color: #17a2b8;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .kpi-section {
+            background: rgba(255, 193, 7, 0.08);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 2px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .kpi-section h4 {
+            color: #ffc107;
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.15), rgba(40, 167, 69, 0.05));
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #28a745;
+            margin: 25px 0;
+        }
+
+        .highlight-box strong {
+            color: #28a745;
+            font-size: 1.15rem;
+        }
+
+        .cta-final {
+            text-align: center;
+            margin: 60px 0;
+            padding: 50px 40px;
+            background: linear-gradient(45deg, #1a1a3e, #2a2a5c);
+            border-radius: 20px;
+            border: 3px solid #ffc107;
+        }
+
+        .cta-final h2 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            color: #ffc107;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .cta-final p {
+            font-size: clamp(1.05rem, 2vw, 1.35rem);
+            color: #e0e0e0;
+            line-height: 1.8;
+            max-width: 1000px;
+            margin: 15px auto;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 140px 20px 40px 20px;
+            }
+
+            .section {
+                padding: 30px 20px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Plan Estratégico GESSOF: Servicios de Business Intelligence</h1>
+        <nav class="main-nav">
+            <a href="#mercado" class="nav-btn">Mercado BI</a>
+            <a href="#capacidades" class="nav-btn">Capacidades</a>
+            <a href="#servicios" class="nav-btn">Servicios</a>
+            <a href="#segmentos" class="nav-btn">Segmentos</a>
+            <a href="#beneficios" class="nav-btn">Beneficios & ROI</a>
+            <a href="#propuesta" class="nav-btn">Propuesta Valor</a>
+            <a href="#comparativa" class="nav-btn">Comparativa</a>
+            <a href="#casos" class="nav-btn">Casos Éxito</a>
+            <a href="#plan" class="nav-btn">Plan Acción</a>
+            <a href="#marketing" class="nav-btn">Marketing</a>
+            <a href="#kpis" class="nav-btn">KPIs</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Sección 1: Alcance del Mercado -->
+        <section id="mercado" class="section">
+            <h2 class="section-title">Alcance de Power BI en el Mercado</h2>
+
+            <div class="executive-summary">
+                GESSOF se posiciona como socio estratégico en transformación digital mediante Business Intelligence, 
+                enfocándose en democratizar el acceso a datos para empresas de todos los tamaños en Chile y Latinoamérica.
+            </div>
+
+            <h3 class="section-subtitle">Estadísticas Clave del Mercado (2024-2025)</h3>
+            
+            <div class="stats-container">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">30M+</div>
+                        <div class="stat-label">Usuarios Activos Mensuales</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100K+</div>
+                        <div class="stat-label">Organizaciones Globales</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">$50B</div>
+                        <div class="stat-label">Mercado Global BI 2032</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">#1</div>
+                        <div class="stat-label">Gartner Magic Quadrant 2024</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Mercado Chile:</strong> Valorado en más de $50M USD anuales con crecimiento del 30% año a año. 
+                Oportunidad significativa para GESSOF de capturar participación en mercado en expansión.
+            </div>
+        </section>
+
+        <!-- Sección 2: Capacidades -->
+        <section id="capacidades" class="section">
+            <h2 class="section-title">Capacidades Principales de Power BI</h2>
+
+            <div class="content-grid">
+                <div class="card">
+                    <h3>Conectividad Extensiva</h3>
+                    <p>Más de 200 conectores nativos a fuentes de datos heterogéneas, facilitando la integración 
+                    con sistemas legacy, bases de datos relacionales y no relacionales, APIs REST, y servicios cloud.</p>
+                </div>
+
+                <div class="card">
+                    <h3>AI Integration</h3>
+                    <p>Microsoft Copilot integrado con GPT-5 (disponible desde 2025) para generación automática de insights, 
+                    análisis en lenguaje natural, y asistencia contextual en desarrollo de medidas DAX.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Real-Time Analytics</h3>
+                    <p>Capacidad de streaming de datos con latencia sub-segundo, ideal para monitoreo operacional, 
+                    dashboards IoT, y análisis de eventos en tiempo real.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Mobile-First Architecture</h3>
+                    <p>Aplicaciones nativas optimizadas para iOS, Android y Windows con soporte offline, 
+                    notificaciones push, y experiencia responsive adaptativa.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Deployment Híbrido</h3>
+                    <p>Flexibilidad de implementación cloud (Power BI Service) u on-premise (Power BI Report Server) 
+                    según requerimientos de compliance y políticas de seguridad corporativas.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Embedded Analytics</h3>
+                    <p>Framework de integración en aplicaciones personalizadas mediante Power BI Embedded, 
+                    permitiendo white-label solutions y arquitecturas multi-tenant.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Advanced Analytics</h3>
+                    <p>Machine Learning integrado con Azure ML, R y Python para análisis predictivo, 
+                    clustering, forecasting, y detección de anomalías sin salir del entorno Power BI.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 3: Servicios GESSOF -->
+        <section id="servicios" class="section">
+            <h2 class="section-title">Portfolio de Servicios GESSOF</h2>
+
+            <h3 class="section-subtitle">Implementación y Configuración</h3>
+            <div class="content-grid">
+                <div class="card">
+                    <h3>Instalación Enterprise</h3>
+                    <ul>
+                        <li>Deployment masivo Power BI Desktop con GPO</li>
+                        <li>Configuración de templates corporativos y themes</li>
+                        <li>Setup de conexiones predeterminadas con credenciales seguras</li>
+                        <li>Integración Azure Active Directory y SSO</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Power BI Service Configuration</h3>
+                    <ul>
+                        <li>Configuración tenant organizacional</li>
+                        <li>Arquitectura de workspaces y governance</li>
+                        <li>Capacidades Premium y Premium Per User</li>
+                        <li>Políticas de compartición y seguridad</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Migración desde Legacy</h3>
+                    <ul>
+                        <li>Excel con macros complejas y VBA</li>
+                        <li>Crystal Reports, SSRS, Business Objects</li>
+                        <li>Cognos, QlikView, Tableau</li>
+                        <li>Proceso de catalogación, reconstrucción y validación</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Power BI Report Server</h3>
+                    <ul>
+                        <li>Instalación en servidores Windows locales</li>
+                        <li>Configuración de seguridad (SSL/TLS y certificados)</li>
+                        <li>Estrategias de respaldo y recuperación ante desastres</li>
+                        <li>Integración con Active Directory y LDAP</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle">Desarrollo de Soluciones BI</h3>
+            <div class="content-grid">
+                <div class="card">
+                    <h3>Dashboards Ejecutivos</h3>
+                    <p>Tablero simple para directivos, con 5-10 KPIs clave, 
+					diseño móvil, datos en tiempo real y acceso limitado al detalle para apoyar decisiones rápidas.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Reportes Operacionales</h3>
+                    <p>Análisis detallados por departamento con capacidades avanzadas de drill-down, filtros contextuales, 
+                    tablas dinámicas, y exportación a Excel/PDF para distribución.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Financial Analytics Avanzado</h3>
+                    <p>Análisis financiero con estado de resultados dinámico, proyección de flujo de caja, 
+					comparación presupuesto vs real con detalle por centro de costo y planificación basada en factores que impulsan los resultados</p>
+                </div>
+
+                <div class="card">
+                    <h3>Supply Chain Analytics</h3>
+                    <p>Análisis de cadena de suministro con métricas de rotación de inventario (ABC), 
+					evaluación de proveedores, KPIs logísticos (OTIF, costo por milla) y desempeño de bodegas.</p>
+                </div>
+
+                <div class="card">
+                    <h3>HR Analytics</h3>
+                    <p>Análisis de gestión de personas con evaluación de desempeño 360°, predicción de rotación, 
+					planificación de sucesión y métricas de diversidad e inclusión.</p>
+                </div>
+            </div>
+
+                   </section>
+
+        <!-- Sección 4: Segmentos de Mercado -->
+        <section id="segmentos" class="section">
+            <h2 class="section-title">Segmentos de Mercado Objetivo</h2>
+
+            <div class="tier-container">
+                <div class="tier-badge">TIER 1 - PYMES</div>
+                <h3 class="tier-title">Corto Plazo - Quick Wins (0-6 meses)</h3>
+                <p class="tier-description">
+                    Empresas de 5-200 empleados con estructuras de decisión ágiles y problemas estandarizables. 
+                    ROI rápido y bajo costo de adquisición.
+                </p>
+
+                <div class="features-list">
+                    <h4>Ventajas Estratégicas</h4>
+                    <ul>
+                        <li>Ciclos de venta cortos (2-4 semanas)</li>
+                        <li>Decisión directa con ownership</li>
+                        <li>Templates replicables por industria</li>
+                        <li>Efecto de referenciación orgánica alto</li>
+                    </ul>
+                </div>
+
+                <h4 style="color: #ffc107; margin: 25px 0 15px 0;">Sectores Prioritarios</h4>
+                <div class="content-grid">
+                    <div class="card">
+                        <h3>Retail y Comercio</h3>
+                        <p>Cadenas con múltiples puntos de venta. Necesidades: control de inventario multilocación, 
+                        análisis de sell-through rate, performance por SKU y local, margin analysis.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Distribuidoras</h3>
+                        <p>Empresas de distribución y logística. Necesidades: optimización de rutas, 
+                        delivery performance (OTIF), análisis de customer profitability, inventory turnover.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Servicios Profesionales</h3>
+                        <p>Estudios legales, consultoras, agencias. Necesidades: project profitability analysis, 
+                        utilization rates, billable vs non-billable hours, client acquisition cost.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Salud Privada</h3>
+                        <p>Clínicas y centros médicos. Necesidades: occupancy rates, revenue per consultation, 
+                        patient no-show analysis, physician productivity metrics.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tier-container">
+                <div class="tier-badge" style="background: rgba(23, 162, 184, 0.2); border-color: #17a2b8; color: #17a2b8;">TIER 2 - EMPRESAS MEDIANAS</div>
+                <h3 class="tier-title" style="color: #17a2b8;">Mediano Plazo (6-18 meses)</h3>
+                <p class="tier-description">
+                    Empresas de 200-1000 empleados. Proyectos de mayor complejidad técnica, 
+                    integración de múltiples sistemas, y requerimientos de data governance.
+                </p>
+
+                <div class="content-grid">
+                    <div class="card">
+                        <h3>Manufactura</h3>
+                        <p>Control de producción con OEE (Overall Equipment Effectiveness), quality control con Six Sigma metrics, 
+                        supply chain visibility, y predictive maintenance.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Agroindustria</h3>
+                        <p>Trazabilidad end-to-end, yield analysis por cultivo/temporada, 
+                        análisis de exportaciones con currency hedging, compliance FSMA.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Construcción</h3>
+                        <p>Multi-project control, earned value management (EVM), 
+                        cost breakdown structure analysis, subcontractor performance tracking.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Logística y Transporte</h3>
+                        <p>Fleet optimization con algoritmos de ruteo, fuel consumption analysis, 
+                        driver performance scoring, maintenance scheduling predictivo.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tier-container">
+                <div class="tier-badge" style="background: rgba(106, 90, 205, 0.2); border-color: #6a5acd; color: #6a5acd;">TIER 3 - GRANDES CORPORACIONES</div>
+                <h3 class="tier-title" style="color: #6a5acd;">Largo Plazo (18-36 meses)</h3>
+                <p class="tier-description">
+                    Empresas de 1000+ empleados. Arquitecturas enterprise complejas, 
+                    data lakes, advanced analytics con ML, y centros de excelencia BI.
+                </p>
+
+                <div class="content-grid">
+                    <div class="card">
+                        <h3>Banca y Seguros</h3>
+                        <p>Reportería regulatoria (Basel III, Solvencia II), credit risk modeling, 
+                        ALM (Asset Liability Management), fraud detection con ML.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Telecomunicaciones</h3>
+                        <p>Churn prediction models, network performance KPIs (latency, packet loss), 
+                        customer lifetime value analysis, ARPU optimization.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Energía</h3>
+                        <p>Demand forecasting con modelos ARIMA, consumption pattern analysis, 
+                        grid optimization, renewable integration analytics.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Gobierno</h3>
+                        <p>Transparencia fiscal, gestión de programas sociales con KPIs de impacto, 
+                        procurement analytics, citizen services performance.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 5: Beneficios y ROI -->
+        <section id="beneficios" class="section">
+            <h2 class="section-title">Beneficios Empresariales y ROI Comprobado</h2>
+
+            <h3 class="section-subtitle">Estudios Forrester - Total Economic Impact</h3>
+            
+            <div class="stats-container">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">271%</div>
+                        <div class="stat-label">ROI Promedio 3 años</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">27%</div>
+                        <div class="stat-label">Faster Time to Insights</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">25.7%</div>
+                        <div class="stat-label">Reducción TCO</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">&lt;6</div>
+                        <div class="stat-label">Meses Payback Period</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle">Beneficios Operacionales Inmediatos</h3>
+
+            <div class="content-grid">
+                <div class="card">
+                    <h3>Productividad y Eficiencia</h3>
+                    <h4>Reducción Tiempo Reportes</h4>
+                    <p>De semanas a horas mediante automatización completa del pipeline de reporting. 
+                    Eliminación de procesos manuales de consolidación y validación.</p>
+                    <h4>Automatización de Procesos</h4>
+                    <p>Scheduled refresh automático, alertas basadas en thresholds, 
+                    distribución automática vía email con subscriptions.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Toma de Decisiones Data-Driven</h3>
+                    <h4>Visibilidad 360°</h4>
+                    <p>Vista consolidada del negocio en tiempo real con capacidades de drill-down 
+                    desde métricas agregadas hasta transacciones individuales.</p>
+                    <h4>Análisis Predictivo</h4>
+                    <p>Forecasting automático con algoritmos de ML, detección de trends, 
+                    y anomaly detection proactivo.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Ventajas Competitivas</h3>
+                    <h4>Respuesta Ágil al Mercado</h4>
+                    <p>Decisiones basadas en datos actuales versus históricos. 
+                    Reducción de latencia en información crítica de negocio.</p>
+                    <h4>Optimización de Recursos</h4>
+                    <p>Mejor asignación de presupuestos mediante análisis de contribution margin, 
+                    identificación de cost drivers, y optimization opportunities.</p>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle">Métricas de Eficiencia Documentadas</h3>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Métrica</th>
+                            <th>Estado Inicial (Sin BI)</th>
+                            <th>Con Power BI</th>
+                            <th>Mejora</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Time to Insights</strong></td>
+                            <td>Días/Semanas</td>
+                            <td>Minutos/Horas</td>
+                            <td style="color: #28a745; font-weight: 600;">90-95% reducción</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Error Rate</strong></td>
+                            <td>5-15% (procesos manuales)</td>
+                            <td>&lt;1% (automatizado)</td>
+                            <td style="color: #28a745; font-weight: 600;">80-90% reducción</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Productividad Analistas</strong></td>
+                            <td>Estado Inicial 100%</td>
+                            <td>300% (3x)</td>
+                            <td style="color: #28a745; font-weight: 600;">200% incremento</td>
+                        </tr>
+                        <tr>
+                            <td><strong>User Adoption</strong></td>
+                            <td>10-20% (Excel)</td>
+                            <td>50-100% (BI)</td>
+                            <td style="color: #28a745; font-weight: 600;">5x incremento</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Costo IT</strong></td>
+                            <td>Estado Inicial 100%</td>
+                            <td>20-30% (3 años)</td>
+                            <td style="color: #28a745; font-weight: 600;">70-80% reducción</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sección 6: Propuesta de Valor -->
+        <section id="propuesta" class="section">
+            <h2 class="section-title">Propuesta de Valor por Stakeholder</h2>
+
+            <div class="value-proposition">
+                <h4>Para Dueño/Gerente General</h4>
+                <p>"Elimine la latencia en información crítica. Visibilidad completa del negocio en tiempo real 
+                desde cualquier dispositivo. Tome decisiones estratégicas con mayor velocidad que su competencia, 
+                basado en data actualizada, no en reportes históricos del mes pasado."</p>
+            </div>
+
+            <div class="value-proposition" style="border-left-color: #17a2b8;">
+                <h4 style="color: #17a2b8;">Para CFO</h4>
+                <p>"Reduzca el ciclo de cierre mensual de 15 a 2 días. Forecasting automático con modelos predictivos. 
+                Control de gastos en tiempo real con drill-down a nivel de centro de costo. 
+                ROI comprobado en menos de 6 meses con payback period acelerado."</p>
+            </div>
+
+            <div class="value-proposition" style="border-left-color: #28a745;">
+                <h4 style="color: #28a745;">Para Director de Operaciones</h4>
+                <p>"Identifique bottlenecks operacionales antes de que impacten la P&L. 
+                Optimice rutas, inventarios, y producción mediante análisis prescriptivo. 
+                Reduzca dependencia en Excel. Libere 70% del tiempo de su equipo para análisis de valor agregado."</p>
+            </div>
+
+            <div class="value-proposition" style="border-left-color: #6610f2;">
+                <h4 style="color: #6610f2;">Para VP de Ventas</h4>
+                <p>"Análisis granular de profitabilidad por vendedor, producto, y cliente. 
+                Identifique exactamente dónde enfocar esfuerzos comerciales para maximizar contribution margin. 
+                Comisiones basadas en datos verificables y auditables en tiempo real."</p>
+            </div>
+        </section>
+
+        <!-- Sección 7: Comparativa -->
+        <section id="comparativa" class="section">
+            <h2 class="section-title">Comparativa: Métodos Legacy vs Power BI</h2>
+
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>Método Legacy (Excel/Reporting Tools)</th>
+                            <th>Power BI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Actualización de Datos</strong></td>
+                            <td>Manual, semanal/mensual con alto riesgo de error humano</td>
+                            <td style="color: #28a745; font-weight: 600;">Automática, horaria/diaria/real-time con scheduled refresh</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Time to Insights</strong></td>
+                            <td>Horas/días consolidando y validando datos</td>
+                            <td style="color: #28a745; font-weight: 600;">Segundos con dashboards pre-configurados</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tasa de Errores</strong></td>
+                            <td>Alta (5-15%): fórmulas rotas, referencias perdidas, versiones obsoletas</td>
+                            <td style="color: #28a745; font-weight: 600;">Mínima (&lt;1%): proceso automatizado con data lineage</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Colaboración</strong></td>
+                            <td>Múltiples versiones vía email, sin control de versioning</td>
+                            <td style="color: #28a745; font-weight: 600;">Single source of truth con Power BI Service, access control granular</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Escalabilidad</strong></td>
+                            <td>Performance degradation con datasets grandes (&gt;1M rows)</td>
+                            <td style="color: #28a745; font-weight: 600;">Optimizado para millones/billones de registros con VertiPaq engine</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Acceso</strong></td>
+                            <td>Restringido a desktop, ubicación física de oficina</td>
+                            <td style="color: #28a745; font-weight: 600;">Ubicuo: web, mobile (iOS/Android), on-premise, offline capable</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Costo de Analista</strong></td>
+                            <td>70-80% tiempo en reporting manual, 20-30% en análisis</td>
+                            <td style="color: #28a745; font-weight: 600;">20-30% reporting automático, 70-80% análisis de valor</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Diferenciación Clave:</strong> Power BI no reemplaza Excel como herramienta de productividad individual, 
+                sino que complementa y supera sus capacidades para Business Intelligence enterprise, 
+                donde se requiere consolidación de múltiples fuentes, distribución escalable, y gobernanza de datos.
+            </div>
+        </section>
+
+        <!-- Sección 8: Casos de Éxito -->
+        <section id="casos" class="section">
+            <h2 class="section-title">Casos de Éxito Replicables en Chile</h2>
+
+            <div class="case-study">
+                <h4>Caso 1: Cadena de Farmacias - 15 Locales</h4>
+                
+                <div class="problem">
+                    <strong style="color: #dc3545;">Problema:</strong><br>
+                    Falta de visibilidad en inventory turnover por SKU y localización. 
+                    Desconocimiento de stock optimal levels, resultando en sobre-stock de productos de baja rotación 
+                    y stock-outs de productos high-demand. Decisiones de compra basadas en intuición versus data.
+                </div>
+
+                <div class="solution">
+                    <strong style="color: #17a2b8;">Solución:</strong><br>
+                    <strong>Stack Técnico:</strong> Excel/Sistema POS → Power Query ETL → Power BI Desktop → Power BI Service<br>
+                    <strong>Entregables:</strong> Dashboard con inventory turnover ABC analysis, sales velocity por SKU/local, 
+                    purchase suggestions automáticas basadas en reorder points dinámicos.
+                </div>
+
+                <div class="results">
+                    <strong>Resultados Medibles - 4 semanas:</strong><br><br>
+                    ✓ <strong>30% reducción</strong> en sobre-stock (capital working liberado)<br>
+                    ✓ <strong>15% incremento</strong> en ventas de productos high-rotation<br>
+                    ✓ <strong>85% reducción</strong> en tiempo de decisión de compras<br>
+                    ✓ <strong>ROI:</strong> 4.2 meses
+                </div>
+            </div>
+
+            <div class="case-study">
+                <h4>Caso 2: Empresa de Transporte - 50 Camiones</h4>
+                
+                <div class="problem">
+                    <strong style="color: #dc3545;">Problema:</strong><br>
+                    Costos operativos escalando sin visibilidad granular. Imposibilidad de identificar drivers 
+                    de fuel consumption por vehículo/chofer/ruta. Emergency maintenance reactivo resultando 
+                    en downtime no planificado y costos elevados.
+                </div>
+
+                <div class="solution">
+                    <strong style="color: #17a2b8;">Solución:</strong><br>
+                    <strong>Stack Técnico:</strong> GPS API → Azure SQL Database → Power BI con DirectQuery<br>
+                    <strong>Entregables:</strong> Fleet management dashboard con fuel consumption analysis, 
+                    driver performance scoring, route optimization recommendations, 
+                    predictive maintenance alerts basados en mileage y usage patterns.
+                </div>
+
+                <div class="results">
+                    <strong>Resultados Medibles - 6 semanas:</strong><br><br>
+                    ✓ <strong>$8,000 USD/mes</strong> ahorro en combustible (12% reducción)<br>
+                    ✓ <strong>40% reducción</strong> en maintenance de emergencia<br>
+                    ✓ <strong>22% mejora</strong> en on-time delivery rate<br>
+                    ✓ <strong>ROI:</strong> 3.8 meses
+                </div>
+            </div>
+
+            <div class="case-study">
+                <h4>Caso 3: Clínica Dental - 5 Sedes</h4>
+                
+                <div class="problem">
+                    <strong style="color: #dc3545;">Problema:</strong><br>
+                    Desconocimiento de occupancy rates reales por consultorio y sede. 
+                    Falta de análisis de profitabilidad por tipo de prestación. 
+                    Alto no-show rate sin análisis de patrones o predicción.
+                </div>
+
+                <div class="solution">
+                    <strong style="color: #17a2b8;">Solución:</strong><br>
+                    <strong>Stack Técnico:</strong> Software Dental (API) → Power Query → Power BI<br>
+                    <strong>Entregables:</strong> Healthcare analytics dashboard con occupancy tracking real-time, 
+                    revenue per consultation analysis, patient no-show prediction model, 
+                    physician productivity metrics (patients/hour).
+                </div>
+
+                <div class="results">
+                    <strong>Resultados Medibles - 3 semanas:</strong><br><br>
+                    ✓ <strong>25% incremento</strong> en occupancy rate mediante schedule optimization<br>
+                    ✓ <strong>18% reducción</strong> en no-show rate con reminder automation<br>
+                    ✓ <strong>$15K USD/mes</strong> revenue incremental<br>
+                    ✓ <strong>ROI:</strong> 2.1 meses
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Patrón Común en Casos de Éxito:</strong><br>
+                1. Problemas business simples pero con high financial impact<br>
+                2. Soluciones implementadas rápido (3-6 semanas) con metodología ágil<br>
+                3. ROI medible y verificable en &lt;6 meses<br>
+                4. Arquitecturas escalables que permiten iteración y expansión
+            </div>
+        </section>
+
+        <!-- Sección 9: Plan de Acción -->
+        <section id="plan" class="section">
+            <h2 class="section-title">Plan de Acción para Comercialización</h2>
+
+            <h3 class="section-subtitle">Fase 1: Preparación Interna (Mes 1-2)</h3>
+
+            <div class="action-timeline">
+                <h4>Certificación del Equipo</h4>
+                <div class="action-item">
+                    <strong>Microsoft PL-300: Power BI Data Analyst Associate</strong>
+                    Certificación oficial que valida competencias en: data preparation con Power Query, 
+                    data modeling, DAX calculations, visualizations design, deployment y management.
+                </div>
+            </div>
+
+            <div class="action-timeline">
+                <h4>Desarrollo de Assets</h4>
+                <div class="action-item">
+                    <strong>Portfolio de Demos por Industria</strong>
+                    Desarrollar 5-7 dashboards demostrativos con datos sintéticos pero realistas:
+                    Retail (ventas e inventario), Logística (flota), Salud (atenciones), 
+                    Manufactura (OEE), Servicios (proyectos).
+                </div>
+                <div class="action-item">
+                    <strong>Templates Reutilizables</strong>
+                    Crear templates enterprise por vertical con best practices de diseño, 
+                    data modeling patterns, y DAX measures library reutilizable.
+                </div>
+                <div class="action-item">
+                    <strong>Metodología Propia GESSOF</strong>
+                   Reunion de analisis inicial, levantamiento de requerimientos, desarrollo iterativo, 
+				   pruebas de usuario (UAT), despliegue y capacitación.
+                </div>
+            </div>
+
+            <h3 class="section-subtitle">Fase 2: Marketing y Posicionamiento (Mes 2-3)</h3>
+
+            <div class="content-grid">
+                <div class="card">
+                    <h3>Website Landing Page</h3>
+                    <p>Servicios Power BI específicos con SEO optimization para keywords: 
+                    "Power BI Chile", "Business Intelligence", "Dashboards empresariales". 
+                    Incluir portfolio cases, testimonials, y CTA para demo request.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Microsoft Partner Network</h3>
+                    <p>Aplicar a Silver/Gold Partner status. Benefits: co-selling opportunities, 
+                    access a Microsoft Field Sales, MDF (Market Development Funds), 
+                    technical pre-sales support, y badge de credibilidad.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Partnerships Estratégicos</h3>
+                    <p>Establecer relationships con: Distributors Microsoft locales, 
+                    vendors de ERP (SAP B1, Softland), software retail (Defontana), 
+                    consultoras de procesos. Model: revenue share 20-30%.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 10: Marketing -->
+        <section id="marketing" class="section">
+            <h2 class="section-title">Estrategia de Marketing Multicanal</h2>
+
+            <div class="content-grid">
+                <div class="card">
+                    <h3>Canal 1: LinkedIn B2B</h3>
+                    <h4>Estrategia</h4>
+                    <ul>
+                        <li>Publicación semanal de casos de éxito con métricas reales</li>
+                        <li>Before/After comparisons de implementaciones</li>
+                        <li>Tips técnicos de BI por industria vertical</li>
+                        <li>LinkedIn Ads: $500/mes segmentado por cargo e industria</li>
+                    </ul>
+                    <p><strong>Meta:</strong> 3-5 MQLs (Marketing Qualified Leads) mensuales</p>
+                </div>
+
+                <div class="card">
+                    <h3>Canal 2: Alianzas Software</h3>
+                    <h4>Targets</h4>
+                    <ul>
+                        <li>Vendedores ERP: SAP Business One, Softland, Bind</li>
+                        <li>Software retail: Defontana, Siscont, Softys</li>
+                        <li>CRM: Salesforce partners, HubSpot agencies</li>
+                    </ul>
+                    <p><strong>Modelo:</strong> Comisión 20% + soporte técnico integración</p>
+                </div>
+
+                <div class="card">
+                    <h3>Canal 3: Eventos Gremiales</h3>
+                    <h4>Asociaciones</h4>
+                    <ul>
+                        <li>Cámara de Comercio de Santiago</li>
+                        <li>Asociación de Retailers (ARC)</li>
+                        <li>Asociación de Industriales (ASIMET)</li>
+                        <li>SOFOFA (Sociedad de Fomento Fabril)</li>
+                    </ul>
+                    <p><strong>Táctica:</strong> Charlas técnicas + demo live + trial 1 mes</p>
+                </div>
+
+                <div class="card">
+                    <h3>Canal 4: Google Ads</h3>
+                    <h4>Keywords</h4>
+                    <ul>
+                        <li>"Dashboard para retail Chile"</li>
+                        <li>"Business Intelligence Santiago"</li>
+                        <li>"Power BI consultoría"</li>
+                        <li>"Reportes automáticos empresa"</li>
+                    </ul>
+                    <p><strong>Presupuesto:</strong> $300-500 USD/mes</p>
+                </div>
+
+                <div class="card">
+                    <h3>Canal 5: Inbound Marketing</h3>
+                    <h4>Content Marketing</h4>
+                    <ul>
+                        <li>Blog técnico: "Cómo calcular ROI de BI"</li>
+                        <li>"5 errores comunes al implementar Power BI"</li>
+                        <li>Templates descargables (lead magnets)</li>
+                        <li>Webinars mensuales técnicos</li>
+                    </ul>
+                    <p><strong>Objetivo:</strong> Posicionamiento SEO + lead nurturing</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 11: KPIs -->
+        <section id="kpis" class="section">
+            <h2 class="section-title">Métricas de Éxito - KPIs GESSOF</h2>
+
+            <div class="kpi-section">
+                <h4>Corto Plazo (6 meses)</h4>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">8-12</div>
+                        <div class="stat-label">Clientes Nuevos PyME</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">$60K-100K</div>
+                        <div class="stat-label">Revenue USD</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Casos Documentados</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">Partnerships Activos</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kpi-section">
+                <h4>Mediano Plazo (18 meses)</h4>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">30-40</div>
+                        <div class="stat-label">Clientes Activos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">$250K-400K</div>
+                        <div class="stat-label">ARR (Annual Recurring Revenue)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">60%</div>
+                        <div class="stat-label">Ingresos Recurrentes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1-2</div>
+                        <div class="stat-label">Productos SaaS Verticales</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kpi-section">
+                <h4>Largo Plazo (36 meses)</h4>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">80-100</div>
+                        <div class="stat-label">Clientes Enterprise</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">$800K-1.2M</div>
+                        <div class="stat-label">ARR Target</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2-3</div>
+                        <div class="stat-label">Países (Expansión Regional)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">15-20</div>
+                        <div class="stat-label">Headcount Team</div>
+                    </div>
+                </div>
+                <p style="text-align: center; color: #ffc107; margin-top: 20px; font-weight: 600;">
+                    Microsoft Solutions Partner Gold Status
+                </p>
+            </div>
+
+            <h3 class="section-subtitle">Primeros Pasos Inmediatos</h3>
+
+            <div class="action-timeline">
+                <h4>Semana 1-2: Sprint Inicial</h4>
+                <div class="action-item">
+                    <strong>1. Definir Verticales Objetivo</strong>
+                    Seleccionar 2 industrias prioritarias (recomendación: Retail + Logística) 
+                    basado en: tamaño de mercado, pain points estandarizables, y network existente.
+                </div>
+                <div class="action-item">
+                    <strong>2. Desarrollar Templates Demo</strong>
+                    Crear 2 dashboards funcionales con datos sintéticos realistas, 
+                    incluyendo data model documentado y DAX measures library.
+                </div>
+                <div class="action-item">
+                    <strong>3. Pitch Deck Corporativo</strong>
+                    Presentación de 10-12 slides: value proposition, casos de éxito, 
+                    metodología, pricing, y team credentials.
+                </div>
+            </div>
+
+            <div class="action-timeline">
+                <h4>Semana 3-4: Activación de Canales</h4>
+                <div class="action-item">
+                    <strong>1. Contactar Potential Partners</strong>
+                    Outreach a 5 partners estratégicos con propuesta de revenue share. 
+                    Prioridad: contadores, ERP vendors, y asociaciones gremiales.
+                </div>
+                <div class="action-item">
+                    <strong>2. LinkedIn Campaign Launch</strong>
+                    Publicar 4 posts profesionales con casos de éxito, técnicas, y thought leadership. 
+                    Setup LinkedIn Ads con budget inicial $500.
+                </div>
+                <div class="action-item">
+                    <strong>3. Google Ads Pilot</strong>
+                    Campaña search con keywords high-intent, presupuesto $300-500, 
+                    landing page optimizada para conversión.
+                </div>
+            </div>
+
+            <div class="action-timeline">
+                <h4>Mes 2: Pipeline Development</h4>
+                <div class="action-item">
+                    <strong>1. Webinar Educativo</strong>
+                    Primer webinar técnico: "BI para [industria objetivo]". 
+                    Target: 20-30 participantes, conversión 10-15% a discovery calls.
+                </div>
+                <div class="action-item">
+                    <strong>2. Sales Pipeline</strong>
+                    Ejecutar 10 reuniones de discovery con prospects calificados. 
+                    Objetivo: cerrar 2-3 clientes en implementaciones piloto.
+                </div>
+            </div>
+
+            <div class="action-timeline">
+                <h4>Mes 3: Optimización y Scaling</h4>
+                <div class="action-item">
+                    <strong>1. Case Studies Documentation</strong>
+                    Documentar primeros casos de éxito con métricas verificables, 
+                    testimonials, y storytelling efectivo.
+                </div>
+                <div class="action-item">
+                    <strong>2. Refinar Go-to-Market</strong>
+                    Ajustar pricing, messaging, y sales process basado en feedback real del mercado. 
+                    Iterar en propuesta de valor.
+                </div>
+                <div class="action-item">
+                    <strong>3. Team Expansion</strong>
+                    Contratar primer consultor adicional con expertise técnico Power BI 
+                    para escalar delivery capacity.
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Final -->
+        <div class="cta-final">
+            <h2>Ventana de Oportunidad: Ejecución Inmediata</h2>
+            <p>
+                El mercado chileno de Business Intelligence está valorado en $50M+ USD anuales con CAGR del 30%. 
+                Power BI domina con liderazgo indiscutido en Gartner Magic Quadrant.
+            </p>
+            <p>
+                GESSOF posee experiencia comprobada en el sector financiero más exigente de Chile, 
+                expertise técnico certificable, y metodología de delivery probada.
+            </p>
+            <p style="font-weight: 600; color: #ffc107; font-size: 1.3rem; margin-top: 25px;">
+                Tecnología validada + Mercado en crecimiento + Experiencia diferenciadora = Momento óptimo de ejecución
+            </p>
+            <p style="margin-top: 25px;">
+                La estrategia está definida. Los números son verificables. El plan es ejecutable. 
+                ROI para clientes en &lt;6 meses. Payback para GESSOF en primeros 12-18 meses.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navBtns = document.querySelectorAll('.nav-btn');
+            const sections = document.querySelectorAll('.section');
+
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            function updateActiveNav() {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    
+                    if (window.pageYOffset >= sectionTop - 130) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navBtns.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('href') === '#' + current) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveNav);
+            updateActiveNav();
+        });
+    </script>
+</body>
+</html>
